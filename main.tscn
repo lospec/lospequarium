@@ -1,0 +1,83 @@
+[gd_scene load_steps=10 format=3 uid="uid://c175jf4ds1chx"]
+
+[ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
+[ext_resource type="Texture2D" uid="uid://chd1smjh0dkgi" path="res://art/tanks/demo.png" id="1_ur807"]
+[ext_resource type="PackedScene" uid="uid://c343ujjd7uavt" path="res://fish.tscn" id="2_am8qu"]
+[ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="3_pskb3"]
+[ext_resource type="Script" path="res://fish.gd" id="4_pvnd0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsvw0"]
+size = Vector2(115, 426)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vywgi"]
+size = Vector2(527, 71)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
+friction = 0.59
+bounce = 0.35
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
+radius = 7.0
+height = 28.0
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Tank" type="Node2D" parent="."]
+script = ExtResource("1_q2ff1")
+
+[node name="Collisions" type="Node2D" parent="Tank"]
+
+[node name="LeftWall" type="StaticBody2D" parent="Tank/Collisions"]
+position = Vector2(200, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/LeftWall"]
+position = Vector2(-254, -39)
+shape = SubResource("RectangleShape2D_tsvw0")
+
+[node name="RightWall" type="StaticBody2D" parent="Tank/Collisions"]
+position = Vector2(200, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/RightWall"]
+position = Vector2(334, -44)
+shape = SubResource("RectangleShape2D_tsvw0")
+
+[node name="TopWall" type="StaticBody2D" parent="Tank/Collisions"]
+position = Vector2(200, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/TopWall"]
+position = Vector2(37, -233)
+shape = SubResource("RectangleShape2D_vywgi")
+
+[node name="TopWall2" type="StaticBody2D" parent="Tank/Collisions"]
+position = Vector2(200, 200)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/TopWall2"]
+position = Vector2(40, 91)
+shape = SubResource("RectangleShape2D_vywgi")
+
+[node name="BG" type="Sprite2D" parent="Tank"]
+texture = ExtResource("1_ur807")
+centered = false
+
+[node name="Fish" parent="." instance=ExtResource("2_am8qu")]
+position = Vector2(200, 200)
+
+[node name="CharacterBody2D" type="RigidBody2D" parent="Fish"]
+physics_material_override = SubResource("PhysicsMaterial_kuxgs")
+gravity_scale = 0.0
+lock_rotation = true
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp = 0.5
+script = ExtResource("4_pvnd0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fish/CharacterBody2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4m0br")
+
+[node name="Sprite2D" type="Sprite2D" parent="Fish/CharacterBody2D"]
+texture = ExtResource("3_pskb3")
+
+[node name="Food" type="Node2D" parent="."]
+
+[connection signal="body_entered" from="Fish/CharacterBody2D" to="Fish/CharacterBody2D" method="_on_body_entered"]
