@@ -14,6 +14,8 @@ var velocity = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 
 @onready var sprite = get_node("Sprite2D")
+@onready var mouth = get_node("Mouth")
+@onready var mouthCol = mouth.find_child("CollisionShape2D")
 
 @onready var FoodGroup = get_node("../../Food")
 
@@ -21,6 +23,7 @@ var rng = RandomNumberGenerator.new()
 func _ready():
 	pass # Replace with function body.
 
+var lastFlip = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -28,13 +31,18 @@ func _process(delta):
 	if (state == IDLE):	idle()
 	if (state == SWIM):	swim()
 	if (state == FOOD):	food()
-		
+
 	hunger = hunger + 1
 	
-	if direction.x > 0:
-		sprite.scale.x = -1
-	else:
-		sprite.scale.x = 1
+	if (lastFlip + 500 < Time.get_ticks_msec() && abs(direction.x) > 0.25):
+		print("flip", direction.x)
+		lastFlip = Time.get_ticks_msec()
+		if (direction.x > 0):
+			sprite.scale.x = -1
+			mouth.scale.x = -1
+		else:
+			sprite.scale.x = 1
+			mouth.scale.x = 1
 	
 
 func idle(): 
@@ -74,15 +82,15 @@ func food():
 			closest_distance = distance
 			closest_food = f
 
-	direction = global_position.direction_to(closest_food.get_global_position())	
+	direction = mouthCol.get_global_position().direction_to(closest_food.get_global_position())	
 	apply_impulse(Vector2(direction.x/2,direction.y/3), Vector2(0.5,0.5))
 
 
-func _on_body_entered(body):
-	if body.name == "Food":
-		print("entered body")
-		hunger = 0
-		body.queue_free()
+#func _on_body_entered(body):
+#	if body.name == "Food":
+#		print("entered body")
+#		hunger = 0
+#		body.queue_free()
 
 var fishSprites = ['black-bass','carp','gargle','horse-mackerel','loach','pond-smelt','rainbow-trout','red-snapper','sockeye-salmon','yellow-tang']
 
@@ -91,3 +99,8 @@ func _input(event):
 		var randomFishSprite = rng.randi_range(0,fishSprites.size()-1)
 		sprite.texture = load("res://art/fish/"+fishSprites[randomFishSprite]+".png")
 
+func _on_fish_mouth_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	if body.name == "Food":
+		print("got good")
+		#hunger = 0
+		body.queue_free()

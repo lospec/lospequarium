@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=11 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Texture2D" uid="uid://chd1smjh0dkgi" path="res://art/tanks/demo.png" id="1_ur807"]
@@ -19,6 +19,9 @@ bounce = 0.35
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
 radius = 7.0
 height = 28.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snvvq"]
+size = Vector2(5, 7)
 
 [node name="Node2D" type="Node2D"]
 
@@ -78,6 +81,15 @@ shape = SubResource("CapsuleShape2D_4m0br")
 [node name="Sprite2D" type="Sprite2D" parent="Fish/CharacterBody2D"]
 texture = ExtResource("3_pskb3")
 
+[node name="Mouth" type="Area2D" parent="Fish/CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fish/CharacterBody2D/Mouth"]
+position = Vector2(-14, 0)
+shape = SubResource("RectangleShape2D_snvvq")
+
 [node name="Food" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="Fish/CharacterBody2D" to="Fish/CharacterBody2D" method="_on_body_entered"]
+[connection signal="body_shape_entered" from="Fish/CharacterBody2D/Mouth" to="Fish/CharacterBody2D" method="_on_fish_mouth_body_shape_entered"]
