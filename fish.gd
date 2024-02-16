@@ -1,13 +1,17 @@
 extends RigidBody2D
 
-@export var speed = 100
+var maxSpeed = 100
+var speed = maxSpeed
 
 enum {IDLE, SWIM, FOOD}
 var state = IDLE
 
 var boredom = 0
+var boredomThreshold = 800
 var tired = 0
+var tiredThreshold = 2000
 var hunger = 5000
+var hungerThreshold = 5000
 var direction = Vector2.ZERO
 
 var velocity = Vector2.ZERO
@@ -47,25 +51,29 @@ func _process(delta):
 
 func idle(): 
 	boredom = boredom + rng.randi_range(0,5)
-	if (boredom > 800):
+	if (boredom > boredomThreshold):
 		state = SWIM
 		boredom = 0
 	pass
 
 func swim():
 	
-	if (hunger>5000 && FoodGroup.get_children().size() > 0): 
+	if (hunger>hungerThreshold/2 && FoodGroup.get_children().size() > 0): 
 		state = FOOD
 		return food()
 	
-	if (tired == 0): direction = Vector2(rng.randi_range(-1,1), rng.randi_range(-1,1))
+	if (tired == 0): 
+		direction = Vector2(rng.randi_range(-1,1), rng.randi_range(-1,1))
+		if (hunger > hungerThreshold/2): speed = maxSpeed / 5
+		else: speed = maxSpeed
 	
-	apply_impulse(Vector2(direction.x/2,direction.y/5), Vector2(0.5,0.5))
+	apply_impulse(Vector2(direction.x/100*speed,direction.y/500*speed), Vector2(0.5,0.5))
 	
 	tired = tired + rng.randi_range(0,5)
-	if (tired > 2000):
+	if (tired > tiredThreshold):
 		state = IDLE
 		tired = 0
+		if (hunger > hungerThreshold/2): tired = tiredThreshold/2
 	pass
 	
 func food():
@@ -85,13 +93,6 @@ func food():
 	direction = mouthCol.get_global_position().direction_to(closest_food.get_global_position())	
 	apply_impulse(Vector2(direction.x/2,direction.y/3), Vector2(0.5,0.5))
 
-
-#func _on_body_entered(body):
-#	if body.name == "Food":
-#		print("entered body")
-#		hunger = 0
-#		body.queue_free()
-
 var fishSprites = ['black-bass','carp','gargle','horse-mackerel','loach','pond-smelt','rainbow-trout','red-snapper','sockeye-salmon','yellow-tang']
 
 func _input(event):
@@ -99,8 +100,10 @@ func _input(event):
 		var randomFishSprite = rng.randi_range(0,fishSprites.size()-1)
 		sprite.texture = load("res://art/fish/"+fishSprites[randomFishSprite]+".png")
 
-func _on_fish_mouth_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	if body.name == "Food":
+func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_index, local_shape_index):
+	if collidedObject.name == "Food":
 		print("got good")
-		#hunger = 0
-		body.queue_free()
+		hunger = hunger - collidedObject.value
+		if (hunger < 0): hunger = 0
+		print("healed fish hunger",collidedObject.value, "now", hunger)
+		collidedObject.queue_free()
