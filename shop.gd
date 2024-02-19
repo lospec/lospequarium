@@ -23,7 +23,10 @@ var lastRefresh = Time.get_ticks_msec()
 var shopItems = [
 	load("res://fish/black-bass.tscn"),
 	load("res://fish/carp.tscn"),
-	load("res://fish/horse-mackerel.tscn")
+	load("res://fish/horse-mackerel.tscn"),
+	load("res://fish/rainbow-trout.tscn"),
+	load("res://fish/red-snapper.tscn"),
+	load("res://fish/sockeye-salmon.tscn"),
 ];
 
 var currentItem
@@ -42,21 +45,32 @@ func revealShop():
 func updateShop():
 	# Current Item
 	currentItemLabel.text = currentItem.properName
-	buyCurrentItemButton.tooltip_text = "Buy " + currentItem.properName + " for $" + str(currentItem.cost)
+	
 	
 	get_node("CurrentItemTexture").texture = currentItem.texture
 	
 	buyCurrentItemButton.text = "$" + str(currentItem.cost)
-	if (currentItem.cost > game.money || roomInTank() == false): buyCurrentItemButton.disabled = true
-	else: buyCurrentItemButton.disabled = false
+	if (roomInTank() == false): 
+		buyCurrentItemButton.disabled = true
+		buyCurrentItemButton.tooltip_text = "Tank is full! Upgrade to fit more fish!"
+	elif (currentItem.cost > game.money):
+		buyCurrentItemButton.disabled = true
+		buyCurrentItemButton.tooltip_text = "You can't afford this!"
+	else: 
+		buyCurrentItemButton.disabled = false
+		buyCurrentItemButton.tooltip_text = "Buy " + currentItem.properName + " for $" + str(currentItem.cost)
 	
 	#Max Fish
 	tankLevelLabel.text = "Max Fish: " + str(game.tankSize+1)
 	var tankSizeCost = pow(2, game.tankSize+5)
-	buyTankUpgradeButton.tooltip_text = "Upgrade max fish in tank to " + str(game.tankSize+1) + " for $" + str(tankSizeCost)
+	
 	buyTankUpgradeButton.text = "$" + str(tankSizeCost)
-	if (tankSizeCost > game.money): buyTankUpgradeButton.disabled = true
-	else: buyTankUpgradeButton.disabled = false
+	if (tankSizeCost > game.money): 
+		buyTankUpgradeButton.tooltip_text = "You can't afford this!"
+		buyTankUpgradeButton.disabled = true
+	else: 
+		buyTankUpgradeButton.tooltip_text = "Upgrade max fish in tank to " + str(game.tankSize+1) + " for $" + str(tankSizeCost)
+		buyTankUpgradeButton.disabled = false
 
 func hideShop():
 	isOpen = false
@@ -102,7 +116,7 @@ func _on_shop_button_pressed():
 	else: revealShop()
 
 func _on_upgrade_tank_button_pressed():
-	var tankSizeCost = pow(2, game.tankSize)
+	var tankSizeCost = pow(2, game.tankSize+5)
 	if (tankSizeCost <= game.money):
 		game.tankSize = game.tankSize + 1
 		game.money = game.money - tankSizeCost
@@ -115,8 +129,11 @@ func _on_buy_current_item_button_pressed():
 		var newFish = currentItem.scene.instantiate()
 		newFish.position.x = rng.randi_range(20, 380)
 		newFish.position.y = 10
+		print("namne",newFish.scene_file_path)
+		newFish.type = "Adsfgasdf"
 		fishContainer.add_child(newFish)
 		newFish.apply_impulse(Vector2(0,100), Vector2(0.5,0.5))
+		game.addFish(newFish)
 	updateShop()
 
 func roomInTank(): 

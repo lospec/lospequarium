@@ -1,8 +1,10 @@
 extends RigidBody2D
 
+@export var type = "invalid-fish-type"
 @export var properName = "REPLACEME"
 @export var cost:int = 50
 @export var maxSpeed:int = 100
+@export var id:int = -1
 var speed = maxSpeed
 
 enum {IDLE, SWIM, FOOD}
@@ -47,6 +49,7 @@ func _process(delta):
 	if (state == FOOD):	food()
 
 	hunger = hunger + 1
+	if hunger > hungerThreshold: hunger = hungerThreshold
 	
 	if (lastFlip + 500 < Time.get_ticks_msec() && abs(direction.x) > 0.25):
 		lastFlip = Time.get_ticks_msec()

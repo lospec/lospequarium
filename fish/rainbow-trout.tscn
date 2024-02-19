@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://cs0x38jrr4idv"]
+
+[ext_resource type="Script" path="res://fish.gd" id="1_sf8wd"]
+[ext_resource type="Texture2D" uid="uid://c1j5ds81y10yl" path="res://art/fish/rainbow-trout.png" id="2_n1qa8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
+friction = 0.59
+bounce = 0.35
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
+radius = 7.0
+height = 28.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_snvvq"]
+size = Vector2(5, 11)
+
+[node name="Fish" type="RigidBody2D"]
+z_index = 10
+physics_material_override = SubResource("PhysicsMaterial_kuxgs")
+gravity_scale = 0.0
+lock_rotation = true
+max_contacts_reported = 1
+contact_monitor = true
+linear_damp = 0.5
+script = ExtResource("1_sf8wd")
+properName = "Rainbow Trout"
+cost = 65
+maxSpeed = 85
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_4m0br")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_n1qa8")
+
+[node name="Mouth" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
+position = Vector2(-14, 0.5)
+shape = SubResource("RectangleShape2D_snvvq")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="Mouth" to="." method="_on_fish_mouth_body_shape_entered"]
