@@ -4,9 +4,9 @@ A simple aquarium simulator reusing the fish assets from the Pikzel Lake collab.
 
 ## Controls
 
-`Left Click` to feed the fish.
+`Left Click` to feed the fish and collect the coins.
 
-Press `F` to change the fish sprite to a random one.
+Click the shop button in the bottom right to open the shop menu. 
 
 ## Contribute
 
