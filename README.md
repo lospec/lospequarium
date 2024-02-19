@@ -1,4 +1,4 @@
-# Lospec Fishtank
+# Lospequarium
 
 A simple aquarium simulator reusing the fish assets from the Pikzel Lake collab.
 
@@ -12,4 +12,3 @@ Click the shop button in the bottom right to open the shop menu.
 
 Use godot 4.2+, and gdscript.
 
-Add what features you want, but make them complete. No half-measures.
