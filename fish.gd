@@ -1,6 +1,8 @@
 extends RigidBody2D
 
-var maxSpeed = 100
+@export var properName = "REPLACEME"
+@export var cost:int = 50
+@export var maxSpeed:int = 100
 var speed = maxSpeed
 
 enum {IDLE, SWIM, FOOD}
@@ -10,22 +12,30 @@ var boredom = 0
 var boredomThreshold = 800
 var tired = 0
 var tiredThreshold = 2000
-var hunger = 5000
 var hungerThreshold = 5000
+var hunger = hungerThreshold / 2
 var direction = Vector2.ZERO
+
+var lastMoneyDrop = 0
+var moneyDropCoolDown = 1000 * 30
 
 var velocity = Vector2.ZERO
 var rng = RandomNumberGenerator.new()
 
+@onready var game = get_node("/root/Node2D")
 @onready var sprite = get_node("Sprite2D")
 @onready var mouth = get_node("Mouth")
 @onready var mouthCol = mouth.find_child("CollisionShape2D")
 
 @onready var FoodGroup = get_node("../../Food")
 
+var coin = load("res://coin.tscn")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if (rng.randi_range(0, 2) == 0):
+		sprite.scale.x = -1
+		mouth.scale.x = -1
 
 var lastFlip = 0
 
@@ -39,7 +49,6 @@ func _process(delta):
 	hunger = hunger + 1
 	
 	if (lastFlip + 500 < Time.get_ticks_msec() && abs(direction.x) > 0.25):
-		print("flip", direction.x)
 		lastFlip = Time.get_ticks_msec()
 		if (direction.x > 0):
 			sprite.scale.x = -1
@@ -47,7 +56,6 @@ func _process(delta):
 		else:
 			sprite.scale.x = 1
 			mouth.scale.x = 1
-	
 
 func idle(): 
 	boredom = boredom + rng.randi_range(0,5)
@@ -74,8 +82,19 @@ func swim():
 		state = IDLE
 		tired = 0
 		if (hunger > hungerThreshold/2): tired = tiredThreshold/2
-	pass
 	
+	moneyDrop()
+
+
+func moneyDrop():
+	if (lastMoneyDrop + moneyDropCoolDown < Time.get_ticks_msec()):
+		lastMoneyDrop = Time.get_ticks_msec()
+		var instance = coin.instantiate()
+		instance.position.x = get_global_position().x
+		instance.position.y = get_global_position().y
+		get_node("/root/Node2D").add_child(instance)
+		print("money drop")
+
 func food():
 	var current_foods = FoodGroup.get_children()
 	if current_foods.size() == 0: 
@@ -93,12 +112,6 @@ func food():
 	direction = mouthCol.get_global_position().direction_to(closest_food.get_global_position())	
 	apply_impulse(Vector2(direction.x/2,direction.y/3), Vector2(0.5,0.5))
 
-var fishSprites = ['black-bass','carp','gargle','horse-mackerel','loach','pond-smelt','rainbow-trout','red-snapper','sockeye-salmon','yellow-tang']
-
-func _input(event):
-	if (event.is_action_released("ChangeFish")):
-		var randomFishSprite = rng.randi_range(0,fishSprites.size()-1)
-		sprite.texture = load("res://art/fish/"+fishSprites[randomFishSprite]+".png")
 
 func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_index, local_shape_index):
 	if collidedObject.name == "Food":

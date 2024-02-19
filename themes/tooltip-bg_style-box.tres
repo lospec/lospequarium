@@ -1,0 +1,13 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://ckv51l6e8hle1"]
+
+[ext_resource type="Texture2D" uid="uid://boomst362aqn5" path="res://art/ui/tooltip-bg.png" id="1_r8awo"]
+
+[resource]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+texture = ExtResource("1_r8awo")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0

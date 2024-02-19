@@ -1,10 +1,18 @@
-[gd_scene load_steps=11 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=18 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
+[ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
 [ext_resource type="Texture2D" uid="uid://chd1smjh0dkgi" path="res://art/tanks/demo.png" id="1_ur807"]
 [ext_resource type="PackedScene" uid="uid://c343ujjd7uavt" path="res://fish.tscn" id="2_am8qu"]
-[ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="3_pskb3"]
-[ext_resource type="Script" path="res://fish.gd" id="4_pvnd0"]
+[ext_resource type="Texture2D" uid="uid://do7kwnsims382" path="res://art/ui/pikzels.png" id="6_3dd2x"]
+[ext_resource type="Theme" uid="uid://ydbe81qfcfi3" path="res://theme.tres" id="7_njjdw"]
+[ext_resource type="Texture2D" uid="uid://b1q7gmfd80ql6" path="res://art/ui/dialog.png" id="8_d01k8"]
+[ext_resource type="Theme" uid="uid://d14ayvl6gndqm" path="res://themes/tooltip_theme.tres" id="8_pmiyt"]
+[ext_resource type="Texture2D" uid="uid://b40m7gocdcrke" path="res://art/ui/shop.png" id="9_qmnaw"]
+[ext_resource type="Script" path="res://shop.gd" id="10_0uksf"]
+[ext_resource type="Theme" uid="uid://dslw584p0c8fd" path="res://themes/shop-buttons.tres" id="12_gm4d3"]
+[ext_resource type="Texture2D" uid="uid://bxfa5xs6r1dyj" path="res://art/ui/shop-indent.png" id="13_h8d08"]
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="15_fg7uf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tsvw0"]
 size = Vector2(115, 426)
@@ -12,18 +20,18 @@ size = Vector2(115, 426)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vywgi"]
 size = Vector2(527, 71)
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
-friction = 0.59
-bounce = 0.35
+[sub_resource type="Theme" id="Theme_5vd60"]
+Label/colors/font_color = Color(0.815686, 0.254902, 0.32549, 1)
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("15_fg7uf")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 7.0
-height = 28.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_snvvq"]
-size = Vector2(5, 7)
+[sub_resource type="Theme" id="Theme_b7yg1"]
+Label/colors/font_color = Color(0.945098, 0.545098, 0.411765, 1)
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("15_fg7uf")
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_rauu0")
 
 [node name="Tank" type="Node2D" parent="."]
 script = ExtResource("1_q2ff1")
@@ -62,34 +70,125 @@ shape = SubResource("RectangleShape2D_vywgi")
 texture = ExtResource("1_ur807")
 centered = false
 
-[node name="Fish" parent="." instance=ExtResource("2_am8qu")]
-position = Vector2(200, 200)
-
-[node name="CharacterBody2D" type="RigidBody2D" parent="Fish"]
-physics_material_override = SubResource("PhysicsMaterial_kuxgs")
-gravity_scale = 0.0
-lock_rotation = true
-max_contacts_reported = 1
-contact_monitor = true
-linear_damp = 0.5
-script = ExtResource("4_pvnd0")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Fish/CharacterBody2D"]
-rotation = 1.5708
-shape = SubResource("CapsuleShape2D_4m0br")
-
-[node name="Sprite2D" type="Sprite2D" parent="Fish/CharacterBody2D"]
-texture = ExtResource("3_pskb3")
-
-[node name="Mouth" type="Area2D" parent="Fish/CharacterBody2D"]
-collision_layer = 2
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Fish/CharacterBody2D/Mouth"]
-position = Vector2(-14, 0)
-shape = SubResource("RectangleShape2D_snvvq")
-
 [node name="Food" type="Node2D" parent="."]
 
-[connection signal="body_entered" from="Fish/CharacterBody2D" to="Fish/CharacterBody2D" method="_on_body_entered"]
-[connection signal="body_shape_entered" from="Fish/CharacterBody2D/Mouth" to="Fish/CharacterBody2D" method="_on_fish_mouth_body_shape_entered"]
+[node name="Fish" parent="." instance=ExtResource("2_am8qu")]
+
+[node name="UI" type="Node2D" parent="."]
+z_index = 50
+
+[node name="Sprite2D" type="Sprite2D" parent="UI"]
+position = Vector2(416, 12)
+texture = ExtResource("6_3dd2x")
+
+[node name="Money" type="Label" parent="UI"]
+offset_left = 427.0
+offset_right = 475.0
+offset_bottom = 23.0
+theme = ExtResource("7_njjdw")
+text = "XXXX
+"
+
+[node name="ShopButton" type="TextureButton" parent="UI"]
+offset_left = 446.0
+offset_top = 237.0
+offset_right = 476.0
+offset_bottom = 266.0
+tooltip_text = "Open Shop"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("9_qmnaw")
+
+[node name="Shop" type="NinePatchRect" parent="UI"]
+offset_left = 480.0
+offset_top = 27.0
+offset_right = 579.0
+offset_bottom = 236.0
+texture = ExtResource("8_d01k8")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("10_0uksf")
+
+[node name="BuyCurrentItemButton" type="Button" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 89.0
+offset_right = 75.0
+offset_bottom = 127.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("12_gm4d3")
+text = "$XXX"
+
+[node name="UpgradeTankButton" type="Button" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 153.0
+offset_right = 75.0
+offset_bottom = 191.0
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("12_gm4d3")
+text = "$XXX"
+
+[node name="TitleLabel" type="Label" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 22.0
+offset_top = 8.0
+offset_right = 70.0
+offset_bottom = 31.0
+theme = ExtResource("7_njjdw")
+text = "Shop"
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 48.0
+offset_right = 75.0
+offset_bottom = 86.0
+mouse_filter = 1
+texture = ExtResource("13_h8d08")
+region_rect = Rect2(0, 0, 10, 10)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="CurrentItemTexture" type="Sprite2D" parent="UI/Shop"]
+position = Vector2(42, 68)
+
+[node name="UpgradeTankLevel" type="Label" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 144.0
+offset_right = 78.0
+offset_bottom = 152.0
+theme = SubResource("Theme_5vd60")
+text = "Max Fish: X"
+horizontal_alignment = 1
+
+[node name="CurrentItemName" type="Label" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 38.0
+offset_right = 78.0
+offset_bottom = 46.0
+theme = SubResource("Theme_5vd60")
+text = "CURRENT ITEM"
+horizontal_alignment = 1
+
+[node name="RefreshCountdown" type="Label" parent="UI/Shop"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 77.0
+offset_right = 73.0
+offset_bottom = 85.0
+theme = SubResource("Theme_b7yg1")
+text = "0"
+horizontal_alignment = 2
+
+[connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
+[connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
+[connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]

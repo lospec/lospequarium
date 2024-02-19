@@ -1,0 +1,9 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://d14ayvl6gndqm"]
+
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="1_f5kgu"]
+[ext_resource type="StyleBox" uid="uid://ckv51l6e8hle1" path="res://themes/tooltip-bg_style-box.tres" id="2_b21l0"]
+
+[resource]
+TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/fonts/font = ExtResource("1_f5kgu")
+TooltipPanel/styles/panel = ExtResource("2_b21l0")

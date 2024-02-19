@@ -1,0 +1,21 @@
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://dslw584p0c8fd"]
+
+[ext_resource type="FontFile" uid="uid://dwt5ondobfh4j" path="res://art/fonts/retro-pixel-thick.ttf" id="1_q28uq"]
+[ext_resource type="StyleBox" uid="uid://dpwrkeedmh3u3" path="res://themes/button-green_style-box-texture_disabled.tres" id="2_5grdq"]
+[ext_resource type="StyleBox" uid="uid://6accbcvi0ob4" path="res://themes/button-green_style_box_texture.tres" id="3_i0wxn"]
+[ext_resource type="StyleBox" uid="uid://bv1g0kcm3sckl" path="res://themes/button-green_style-box-texture_hover.tres" id="4_8cg4n"]
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="5_v78d0"]
+[ext_resource type="StyleBox" uid="uid://ckv51l6e8hle1" path="res://themes/tooltip-bg_style-box.tres" id="6_qy10j"]
+
+[resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.431373, 0.317647, 0.415686, 1)
+Button/colors/font_hover_color = Color(0.290196, 0.478431, 0.278431, 1)
+Button/fonts/font = ExtResource("1_q28uq")
+Button/styles/disabled = ExtResource("2_5grdq")
+Button/styles/hover = ExtResource("4_8cg4n")
+Button/styles/normal = ExtResource("3_i0wxn")
+Button/styles/pressed = ExtResource("4_8cg4n")
+TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/fonts/font = ExtResource("5_v78d0")
+TooltipPanel/styles/panel = ExtResource("6_qy10j")
