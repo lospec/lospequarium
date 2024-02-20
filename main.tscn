@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=20 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -14,11 +14,16 @@
 [ext_resource type="Texture2D" uid="uid://bxfa5xs6r1dyj" path="res://art/ui/shop-indent.png" id="13_h8d08"]
 [ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="15_fg7uf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsvw0"]
-size = Vector2(115, 426)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_avjf6"]
+normal = Vector2(1, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vywgi"]
-size = Vector2(527, 71)
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ko7lf"]
+normal = Vector2(-1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_ywvel"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_jgt0l"]
 
 [sub_resource type="Theme" id="Theme_5vd60"]
 Label/colors/font_color = Color(0.815686, 0.254902, 0.32549, 1)
@@ -42,29 +47,29 @@ script = ExtResource("1_q2ff1")
 position = Vector2(200, 200)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/LeftWall"]
-position = Vector2(-254, -39)
-shape = SubResource("RectangleShape2D_tsvw0")
+position = Vector2(-201, -39)
+shape = SubResource("WorldBoundaryShape2D_avjf6")
 
 [node name="RightWall" type="StaticBody2D" parent="Tank/Collisions"]
 position = Vector2(200, 200)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/RightWall"]
-position = Vector2(334, -44)
-shape = SubResource("RectangleShape2D_tsvw0")
+position = Vector2(281, -44)
+shape = SubResource("WorldBoundaryShape2D_ko7lf")
 
 [node name="TopWall" type="StaticBody2D" parent="Tank/Collisions"]
 position = Vector2(200, 200)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/TopWall"]
-position = Vector2(37, -233)
-shape = SubResource("RectangleShape2D_vywgi")
+position = Vector2(37, -201)
+shape = SubResource("WorldBoundaryShape2D_ywvel")
 
-[node name="TopWall2" type="StaticBody2D" parent="Tank/Collisions"]
+[node name="BottomWall" type="StaticBody2D" parent="Tank/Collisions"]
 position = Vector2(200, 200)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/TopWall2"]
-position = Vector2(40, 91)
-shape = SubResource("RectangleShape2D_vywgi")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/BottomWall"]
+position = Vector2(40, 71)
+shape = SubResource("WorldBoundaryShape2D_jgt0l")
 
 [node name="BG" type="Sprite2D" parent="Tank"]
 texture = ExtResource("1_ur807")
