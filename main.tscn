@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=30 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -12,7 +12,14 @@
 [ext_resource type="Script" path="res://shop.gd" id="10_0uksf"]
 [ext_resource type="Theme" uid="uid://dslw584p0c8fd" path="res://themes/shop-buttons.tres" id="12_gm4d3"]
 [ext_resource type="Texture2D" uid="uid://bxfa5xs6r1dyj" path="res://art/ui/shop-indent.png" id="13_h8d08"]
+[ext_resource type="Texture2D" uid="uid://bw045gyko1l3n" path="res://art/ui/dialog-blue.png" id="14_fl8mk"]
 [ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="15_fg7uf"]
+[ext_resource type="Texture2D" uid="uid://dytm85cltfqg" path="res://art/ui/indent-blue.png" id="15_omj1t"]
+[ext_resource type="Texture2D" uid="uid://dwiin8waxr75u" path="res://art/ui/xp-bar-empty.png" id="16_8b1ff"]
+[ext_resource type="FontFile" uid="uid://b24ts2555dqqf" path="res://art/fonts/pixhobo.ttf" id="16_txocg"]
+[ext_resource type="Material" uid="uid://bh4n32yopxgul" path="res://shaders/xpbar-shader-material.tres" id="17_a05g7"]
+[ext_resource type="Texture2D" uid="uid://dnr1ogjya0ww8" path="res://art/ui/xp-bar-full.png" id="18_pwm8v"]
+[ext_resource type="Texture2D" uid="uid://dt7uuike2500x" path="res://art/ui/xp-bar-full-single-sprite.png" id="19_ovuny"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -39,8 +46,28 @@ Label/colors/font_color = Color(0.945098, 0.545098, 0.411765, 1)
 Label/font_sizes/font_size = 8
 Label/fonts/font = ExtResource("15_fg7uf")
 
+[sub_resource type="Theme" id="Theme_320sv"]
+Label/colors/font_color = Color(0.286275, 0.333333, 0.533333, 1)
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("15_fg7uf")
+
+[sub_resource type="Theme" id="Theme_v3nll"]
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("15_fg7uf")
+
+[sub_resource type="Theme" id="Theme_vxyf1"]
+Label/colors/font_color = Color(1, 1, 1, 1)
+Label/colors/font_shadow_color = Color(0.286275, 0.333333, 0.533333, 1)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 0
+Label/font_sizes/font_size = 13
+Label/fonts/font = ExtResource("16_txocg")
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rauu0")
+metadata/_edit_vertical_guides_ = [-82.0, 560.0, -76.0, -12.0]
 
 [node name="Tank" type="Node2D" parent="."]
 script = ExtResource("1_q2ff1")
@@ -143,7 +170,7 @@ offset_bottom = 31.0
 theme = ExtResource("7_njjdw")
 text = "Shop"
 
-[node name="NinePatchRect" type="NinePatchRect" parent="UI/Shop"]
+[node name="ItemBg" type="NinePatchRect" parent="UI/Shop"]
 layout_mode = 0
 offset_left = 11.0
 offset_top = 48.0
@@ -189,6 +216,131 @@ offset_bottom = 85.0
 theme = SubResource("Theme_b7yg1")
 text = "0"
 horizontal_alignment = 2
+
+[node name="Fish" type="NinePatchRect" parent="UI"]
+offset_left = -99.0
+offset_top = 27.0
+offset_bottom = 236.0
+texture = ExtResource("14_fl8mk")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="FishBg" type="NinePatchRect" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 48.0
+offset_right = 87.0
+offset_bottom = 86.0
+mouse_filter = 1
+texture = ExtResource("15_omj1t")
+region_rect = Rect2(0, 0, 10, 10)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="FishName" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 38.0
+offset_right = 90.0
+offset_bottom = 46.0
+theme = SubResource("Theme_320sv")
+text = "FISH NAME"
+horizontal_alignment = 1
+
+[node name="FishSpecies" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 89.0
+offset_right = 90.0
+offset_bottom = 97.0
+theme = SubResource("Theme_320sv")
+text = "FISH SPECIES"
+horizontal_alignment = 1
+
+[node name="Age" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 190.0
+offset_right = 90.0
+offset_bottom = 198.0
+theme = SubResource("Theme_320sv")
+text = "Age: 0 Days"
+horizontal_alignment = 1
+
+[node name="XPLabel" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 122.0
+offset_right = 35.0
+offset_bottom = 130.0
+theme = SubResource("Theme_320sv")
+text = "XP
+"
+
+[node name="XPNeeded" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 139.0
+offset_right = 87.0
+offset_bottom = 147.0
+theme = SubResource("Theme_320sv")
+text = "/ 999,999"
+horizontal_alignment = 2
+
+[node name="XPCurrent" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 36.0
+offset_top = 122.0
+offset_right = 87.0
+offset_bottom = 130.0
+theme = SubResource("Theme_v3nll")
+text = "999,999
+"
+horizontal_alignment = 2
+
+[node name="TitleLabel" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 8.0
+offset_right = 85.0
+offset_bottom = 31.0
+theme = ExtResource("7_njjdw")
+text = "Fish"
+
+[node name="FishLevel" type="Label" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 101.0
+offset_right = 93.0
+offset_bottom = 124.0
+theme = SubResource("Theme_vxyf1")
+text = "lv. 0"
+horizontal_alignment = 1
+
+[node name="XPBarBack" type="NinePatchRect" parent="UI/Fish"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 129.0
+offset_right = 87.0
+offset_bottom = 139.0
+texture = ExtResource("16_8b1ff")
+patch_margin_left = 5
+patch_margin_top = 5
+patch_margin_right = 5
+patch_margin_bottom = 5
+
+[node name="XPBarFill" type="Sprite2D" parent="UI/Fish"]
+material = ExtResource("17_a05g7")
+position = Vector2(55, 134)
+texture = ExtResource("19_ovuny")
+
+[node name="Xp-bar-full" type="Sprite2D" parent="."]
+position = Vector2(-63, 172)
+texture = ExtResource("18_pwm8v")
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
