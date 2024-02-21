@@ -5,3 +5,4 @@
 [resource]
 shader = ExtResource("1_ly66n")
 shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/enabled = false
