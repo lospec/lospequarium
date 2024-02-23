@@ -38,8 +38,7 @@ func revealShop():
 	shopButton.tooltip_text = "Close Shop"
 	updateShop()
 	var tween = create_tween()
-	tween.set_ease(1)
-	tween.tween_property(shop, "position", Vector2(400,position.y), shopRevealTime)
+	tween.tween_property(shop, "position", Vector2(400,position.y), shopRevealTime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	print("revealed shop")
 
 func updateShop():
@@ -77,8 +76,7 @@ func hideShop():
 	shopButton.texture_normal = openButton
 	shopButton.tooltip_text = "Open Shop"
 	var tween = create_tween()
-	tween.set_ease(1)
-	tween.tween_property(shop, "position", Vector2(480,position.y), shopRevealTime)	
+	tween.tween_property(shop, "position", Vector2(480,position.y), shopRevealTime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	print("hid shop")
 
 func _ready():
