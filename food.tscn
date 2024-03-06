@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://uydiw4usd03x" path="res://art/food/food.png" id="2_s6cca"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y7qrg"]
-radius = 3.16228
+radius = 4.0
 
 [node name="Food" type="RigidBody2D"]
 collision_layer = 2

@@ -14,6 +14,7 @@ func _unhandled_input(event):
 		query_parameters.position = event.position
 		var intersections = physicsSpace.intersect_point(query_parameters)
 		for i in intersections:
+			if (i.collider.name == "Fish"): return
 			if (i.collider.name == "CoinClick"): return
 
 		var instance = food.instantiate()

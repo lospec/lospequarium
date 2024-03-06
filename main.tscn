@@ -1,10 +1,10 @@
-[gd_scene load_steps=30 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=35 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
 [ext_resource type="Texture2D" uid="uid://chd1smjh0dkgi" path="res://art/tanks/demo.png" id="1_ur807"]
 [ext_resource type="PackedScene" uid="uid://c343ujjd7uavt" path="res://fish.tscn" id="2_am8qu"]
-[ext_resource type="Texture2D" uid="uid://do7kwnsims382" path="res://art/ui/pikzels.png" id="6_3dd2x"]
+[ext_resource type="Texture2D" uid="uid://3qttc4rgjmdp" path="res://art/ui/coin.png" id="5_gm5n3"]
 [ext_resource type="Theme" uid="uid://ydbe81qfcfi3" path="res://theme.tres" id="7_njjdw"]
 [ext_resource type="Texture2D" uid="uid://b1q7gmfd80ql6" path="res://art/ui/dialog.png" id="8_d01k8"]
 [ext_resource type="Theme" uid="uid://d14ayvl6gndqm" path="res://themes/tooltip_theme.tres" id="8_pmiyt"]
@@ -15,11 +15,16 @@
 [ext_resource type="Texture2D" uid="uid://bw045gyko1l3n" path="res://art/ui/dialog-blue.png" id="14_fl8mk"]
 [ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="15_fg7uf"]
 [ext_resource type="Texture2D" uid="uid://dytm85cltfqg" path="res://art/ui/indent-blue.png" id="15_omj1t"]
+[ext_resource type="Script" path="res://scripts/fish-info.gd" id="15_vjgyl"]
 [ext_resource type="Texture2D" uid="uid://dwiin8waxr75u" path="res://art/ui/xp-bar-empty.png" id="16_8b1ff"]
 [ext_resource type="FontFile" uid="uid://b24ts2555dqqf" path="res://art/fonts/pixhobo.ttf" id="16_txocg"]
-[ext_resource type="Material" uid="uid://bh4n32yopxgul" path="res://shaders/xpbar-shader-material.tres" id="17_a05g7"]
+[ext_resource type="Texture2D" uid="uid://diyrk41vmwcq" path="res://art/ui/hunger-bar-empty.png" id="18_ote10"]
 [ext_resource type="Texture2D" uid="uid://dnr1ogjya0ww8" path="res://art/ui/xp-bar-full.png" id="18_pwm8v"]
-[ext_resource type="Texture2D" uid="uid://dt7uuike2500x" path="res://art/ui/xp-bar-full-single-sprite.png" id="19_ovuny"]
+[ext_resource type="Texture2D" uid="uid://dk3rpjklbldgv" path="res://art/ui/hunger-bar-full.png" id="19_2q1i4"]
+[ext_resource type="Texture2D" uid="uid://bq3b5aw1ebkm1" path="res://art/ui/close.png" id="20_yts4y"]
+[ext_resource type="Texture2D" uid="uid://dj44nubpby3xc" path="res://art/ui/close-down.png" id="21_sey11"]
+[ext_resource type="Texture2D" uid="uid://dwajr5jv00bs2" path="res://art/ui/close-hover.png" id="22_i3grg"]
+[ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="23_hmng7"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -106,8 +111,12 @@ centered = false
 z_index = 50
 
 [node name="Sprite2D" type="Sprite2D" parent="UI"]
-position = Vector2(416, 12)
-texture = ExtResource("6_3dd2x")
+position = Vector2(414, 12)
+texture = ExtResource("5_gm5n3")
+
+[node name="Sprite2D2" type="Sprite2D" parent="UI"]
+position = Vector2(414, 12)
+texture = ExtResource("5_gm5n3")
 
 [node name="Money" type="Label" parent="UI"]
 offset_left = 427.0
@@ -217,22 +226,24 @@ theme = SubResource("Theme_b7yg1")
 text = "0"
 horizontal_alignment = 2
 
-[node name="Fish" type="NinePatchRect" parent="UI"]
+[node name="FishInfo" type="NinePatchRect" parent="UI"]
 offset_left = -99.0
 offset_top = 27.0
-offset_bottom = 236.0
+offset_right = -1.0
+offset_bottom = 237.0
 texture = ExtResource("14_fl8mk")
 patch_margin_left = 16
 patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
+script = ExtResource("15_vjgyl")
 
-[node name="FishBg" type="NinePatchRect" parent="UI/Fish"]
+[node name="FishBg" type="NinePatchRect" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 48.0
+offset_top = 20.0
 offset_right = 87.0
-offset_bottom = 86.0
+offset_bottom = 58.0
 mouse_filter = 1
 texture = ExtResource("15_omj1t")
 region_rect = Rect2(0, 0, 10, 10)
@@ -241,102 +252,177 @@ patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
 
-[node name="FishName" type="Label" parent="UI/Fish"]
+[node name="FishName" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 38.0
+offset_top = 11.0
 offset_right = 90.0
-offset_bottom = 46.0
+offset_bottom = 19.0
 theme = SubResource("Theme_320sv")
 text = "FISH NAME"
 horizontal_alignment = 1
 
-[node name="FishSpecies" type="Label" parent="UI/Fish"]
+[node name="FishSpecies" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 89.0
+offset_top = 61.0
 offset_right = 90.0
-offset_bottom = 97.0
+offset_bottom = 69.0
 theme = SubResource("Theme_320sv")
 text = "FISH SPECIES"
 horizontal_alignment = 1
 
-[node name="Age" type="Label" parent="UI/Fish"]
+[node name="FishSpecies" type="Label" parent="UI/FishInfo/FishSpecies"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 14.0
+offset_right = 74.0
+offset_bottom = 22.0
+theme = SubResource("Theme_320sv")
+text = "HUNGER:"
+
+[node name="Age" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 20.0
-offset_top = 190.0
+offset_top = 150.0
 offset_right = 90.0
-offset_bottom = 198.0
+offset_bottom = 158.0
 theme = SubResource("Theme_320sv")
 text = "Age: 0 Days"
 horizontal_alignment = 1
 
-[node name="XPLabel" type="Label" parent="UI/Fish"]
+[node name="XPLabel" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 122.0
+offset_top = 120.0
 offset_right = 35.0
-offset_bottom = 130.0
+offset_bottom = 128.0
 theme = SubResource("Theme_320sv")
-text = "XP
+text = "XP:
 "
 
-[node name="XPNeeded" type="Label" parent="UI/Fish"]
+[node name="XPNeeded" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 139.0
+offset_top = 137.0
 offset_right = 87.0
-offset_bottom = 147.0
+offset_bottom = 145.0
 theme = SubResource("Theme_320sv")
 text = "/ 999,999"
 horizontal_alignment = 2
 
-[node name="XPCurrent" type="Label" parent="UI/Fish"]
+[node name="XPCurrent" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 36.0
-offset_top = 122.0
+offset_top = 120.0
 offset_right = 87.0
-offset_bottom = 130.0
+offset_bottom = 128.0
 theme = SubResource("Theme_v3nll")
 text = "999,999
 "
 horizontal_alignment = 2
 
-[node name="TitleLabel" type="Label" parent="UI/Fish"]
+[node name="TitleLabel" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
-offset_left = 37.0
+offset_left = -63.0
 offset_top = 8.0
-offset_right = 85.0
+offset_right = -15.0
 offset_bottom = 31.0
 theme = ExtResource("7_njjdw")
 text = "Fish"
 
-[node name="FishLevel" type="Label" parent="UI/Fish"]
+[node name="FishLevel" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 17.0
-offset_top = 101.0
+offset_top = 97.0
 offset_right = 93.0
-offset_bottom = 124.0
+offset_bottom = 120.0
 theme = SubResource("Theme_vxyf1")
 text = "lv. 0"
 horizontal_alignment = 1
 
-[node name="XPBarBack" type="NinePatchRect" parent="UI/Fish"]
+[node name="HungerBar" type="TextureProgressBar" parent="UI/FishInfo"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 129.0
+offset_top = 82.0
 offset_right = 87.0
-offset_bottom = 139.0
-texture = ExtResource("16_8b1ff")
-patch_margin_left = 5
-patch_margin_top = 5
-patch_margin_right = 5
-patch_margin_bottom = 5
+offset_bottom = 92.0
+tooltip_text = "50%"
+theme = ExtResource("8_pmiyt")
+max_value = 1.0
+step = 0.01
+value = 0.5
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 5
+stretch_margin_right = 5
+stretch_margin_bottom = 5
+texture_under = ExtResource("18_ote10")
+texture_progress = ExtResource("19_2q1i4")
 
-[node name="XPBarFill" type="Sprite2D" parent="UI/Fish"]
-material = ExtResource("17_a05g7")
-position = Vector2(55, 134)
-texture = ExtResource("19_ovuny")
+[node name="XPBar" type="TextureProgressBar" parent="UI/FishInfo"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 127.0
+offset_right = 87.0
+offset_bottom = 137.0
+tooltip_text = "50%"
+theme = ExtResource("8_pmiyt")
+max_value = 1.0
+step = 0.01
+value = 0.5
+nine_patch_stretch = true
+stretch_margin_left = 5
+stretch_margin_top = 5
+stretch_margin_right = 5
+stretch_margin_bottom = 5
+texture_under = ExtResource("16_8b1ff")
+texture_progress = ExtResource("18_pwm8v")
+
+[node name="CloseButton" type="TextureButton" parent="UI/FishInfo"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 212.0
+offset_right = 48.0
+offset_bottom = 241.0
+tooltip_text = "Hide Fish Info"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("20_yts4y")
+texture_pressed = ExtResource("21_sey11")
+texture_hover = ExtResource("22_i3grg")
+flip_h = true
+
+[node name="SellButton" type="Button" parent="UI/FishInfo"]
+layout_mode = 0
+offset_left = -87.0
+offset_top = 161.0
+offset_right = -23.0
+offset_bottom = 199.0
+tooltip_text = "Sell this fish"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("12_gm4d3")
+text = "SELL"
+
+[node name="FishTexture" type="Sprite2D" parent="UI/FishInfo"]
+position = Vector2(54, 39)
+texture = ExtResource("23_hmng7")
+
+[node name="DebugText" type="Label" parent="UI/FishInfo"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.251
+anchor_bottom = 0.055
+offset_left = 101.0
+offset_top = -24.0
+offset_right = 227.402
+offset_bottom = 227.45
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("15_fg7uf")
+theme_override_font_sizes/font_size = 8
 
 [node name="Xp-bar-full" type="Sprite2D" parent="."]
 position = Vector2(-63, 172)
@@ -345,3 +431,5 @@ texture = ExtResource("18_pwm8v")
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
+[connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
+[connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]

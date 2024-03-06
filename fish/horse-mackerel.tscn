@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbaes0c8pyao4"]
+[gd_scene load_steps=8 format=3 uid="uid://dbaes0c8pyao4"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_76ggq"]
 [ext_resource type="Texture2D" uid="uid://bwpplriqcwkst" path="res://art/fish/horse-mackerel.png" id="2_f5sab"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_nnntk"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
@@ -11,11 +12,17 @@ bounce = 0.35
 radius = 7.0
 height = 28.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0777p"]
+shader = ExtResource("2_nnntk")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/enabled = false
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_snvvq"]
-size = Vector2(5, 11)
+size = Vector2(14.5, 11)
 
 [node name="Fish" type="RigidBody2D"]
 z_index = 10
+input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_kuxgs")
 gravity_scale = 0.0
 lock_rotation = true
@@ -25,22 +32,29 @@ linear_damp = 0.5
 script = ExtResource("1_76ggq")
 properName = "Horse Mackerel"
 cost = 45
-maxSpeed = 120
+maxSpeed = 60
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4m0br")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_0777p")
 texture = ExtResource("2_f5sab")
 
 [node name="Mouth" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 2
 
+[node name="MouthPoint" type="Marker2D" parent="Mouth"]
+position = Vector2(-13, 0)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
-position = Vector2(-14, 0.5)
+position = Vector2(-9.25, 0.5)
 shape = SubResource("RectangleShape2D_snvvq")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="input_event" from="." to="." method="_on_input_event"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
 [connection signal="body_shape_entered" from="Mouth" to="." method="_on_fish_mouth_body_shape_entered"]

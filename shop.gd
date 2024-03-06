@@ -20,6 +20,12 @@ var lastRefresh = Time.get_ticks_msec()
 
 @export var isOpen = false
 
+var starterFish = [
+	load("res://fish/black-bass.tscn"),
+	load("res://fish/carp.tscn"),
+	load("res://fish/horse-mackerel.tscn"),
+]
+
 var shopItems = [
 	load("res://fish/black-bass.tscn"),
 	load("res://fish/carp.tscn"),
@@ -27,6 +33,9 @@ var shopItems = [
 	load("res://fish/rainbow-trout.tscn"),
 	load("res://fish/red-snapper.tscn"),
 	load("res://fish/sockeye-salmon.tscn"),
+	load("res://fish/silver-carp.tscn"),
+	load("res://fish/barred-knifejaw.tscn"),
+	load("res://fish/saddled-bichir.tscn"),
 ];
 
 var currentItem
@@ -93,9 +102,12 @@ func refreshShop():
 	print("refresh shop")
 	lastRefresh = Time.get_ticks_msec() 
 	
-	var newItemIndex = rng.randi_range(0,shopItems.size()-1)
-	print("newItemIndex",newItemIndex,shopItems[newItemIndex])
-	var newItem = shopItems[newItemIndex]
+	var stock = shopItems
+	if (fishContainer.get_child_count() == 0): stock = starterFish
+
+	var newItemIndex = rng.randi_range(0,stock.size()-1)
+	print("newItemIndex",newItemIndex,stock[newItemIndex])
+	var newItem = stock[newItemIndex]
 	var instantiatedItem = newItem.instantiate()
 	
 	currentItem = {}

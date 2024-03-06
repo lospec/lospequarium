@@ -1,5 +1,7 @@
 extends Node2D
 
+@export var DEBUG_MODE:bool = false
+
 const savefileLocation = "user://fishgamesave.json"
 
 const secondsBetweenAutosave = 10
@@ -46,6 +48,9 @@ func spawnFish(fishData):
 	# Update all variables that are stored in fishdata
 	newFish.id = fishData.id
 	newFish.hunger = fishData.hunger
+	if (fishData.birth): newFish.birth = fishData.birth
+	if (fishData.xp): newFish.xp = fishData.xp
+	if (fishData.level): newFish.level = fishData.level
 	
 	# postion in tank
 	newFish.position.x = rng.randi_range(20, 380)
@@ -89,5 +94,12 @@ func updateFishData(fish):
 	for f in spawnedFish:
 		if fish.id == f.id:
 			fish.hunger = f.hunger
+			fish.level = f.level
+			fish.xp = f.xp
+			fish.birth = f.birth
 			return
 	print("failed to find matching fish when saving fish data. id:",fish.id)
+
+
+func _on_sell_button_pressed():
+	print("sell fish")

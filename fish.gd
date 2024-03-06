@@ -2,9 +2,14 @@ extends RigidBody2D
 
 @export var type = "invalid-fish-type"
 @export var properName = "REPLACEME"
+@export var petName = ""
 @export var cost:int = 50
 @export var maxSpeed:int = 100
 @export var id:int = -1
+@export var level:int = 1
+@export var xp:int = 0
+@export var birth:float = Time.get_unix_time_from_system()
+
 var speed = maxSpeed
 
 enum {IDLE, SWIM, FOOD}
@@ -27,9 +32,11 @@ var rng = RandomNumberGenerator.new()
 @onready var game = get_node("/root/Node2D")
 @onready var sprite = get_node("Sprite2D")
 @onready var mouth = get_node("Mouth")
+@onready var mouthPoint = get_node("Mouth/MouthPoint")
 @onready var mouthCol = mouth.find_child("CollisionShape2D")
 
 @onready var FoodGroup = get_node("../../Food")
+@onready var FishInfoPanel = get_node("/root/Node2D/UI/FishInfo")
 
 var coin = load("res://coin.tscn")
 
@@ -49,7 +56,7 @@ func _process(delta):
 	if (state == FOOD):	food()
 
 	hunger = hunger + 1
-	if hunger > hungerThreshold: hunger = hungerThreshold
+	if (hunger > hungerThreshold): hunger = hungerThreshold
 	
 	if (lastFlip + 500 < Time.get_ticks_msec() && abs(direction.x) > 0.25):
 		lastFlip = Time.get_ticks_msec()
@@ -90,7 +97,7 @@ func swim():
 
 
 func moneyDrop():
-	if (lastMoneyDrop + moneyDropCoolDown < Time.get_ticks_msec()):
+	if (hunger < (hungerThreshold * 0.25) && lastMoneyDrop + moneyDropCoolDown < Time.get_ticks_msec() && rng.randi_range(0,100) == 0):
 		lastMoneyDrop = Time.get_ticks_msec()
 		var instance = coin.instantiate()
 		instance.position.x = get_global_position().x
@@ -112,14 +119,38 @@ func food():
 			closest_distance = distance
 			closest_food = f
 
-	direction = mouthCol.get_global_position().direction_to(closest_food.get_global_position())	
+	direction = mouthPoint.get_global_position().direction_to(closest_food.get_global_position())	
 	apply_impulse(Vector2(direction.x/2,direction.y/3), Vector2(0.5,0.5))
 
 
 func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_index, local_shape_index):
-	if collidedObject.name == "Food":
-		print("got good")
+	if (state == FOOD && collidedObject.name == "Food"):
 		hunger = hunger - collidedObject.value
 		if (hunger < 0): hunger = 0
-		print("healed fish hunger",collidedObject.value, "now", hunger)
+		xp = xp + 1
 		collidedObject.queue_free()
+		# TODO: check for level up, and level fish up
+		if (xp >= FishInfoPanel.calculateXpNeededForLevelUp(level)):
+			xp = xp - FishInfoPanel.calculateXpNeededForLevelUp(level)
+			level = level + 1
+		print("fish ate food")
+		
+		if (self == FishInfoPanel.selectedFish):
+			FishInfoPanel.updateXP()
+
+func _on_mouse_entered():
+	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
+	print('hover fish')
+
+func _on_mouse_exited():
+	(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
+	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
+	print('unhover fish')
+
+func _on_input_event(viewport, event, shape_idx):
+	if (event is InputEventMouseButton && !event.pressed && event.button_index==1):
+		FishInfoPanel.selectedFish = self
+		FishInfoPanel.revealInfo()
+		print("clicked fish")
+		
