@@ -154,3 +154,11 @@ func _on_input_event(viewport, event, shape_idx):
 		FishInfoPanel.revealInfo()
 		print("clicked fish")
 		
+
+
+func _on_body_entered(collidedObject):
+	print("COLLIDED",self,collidedObject)
+	if (collidedObject.name == "Fish"):
+		get_node("/root/Node2D/Sound/Bloop").playing = true
+		print(get_parent())
+		print("bloop")
