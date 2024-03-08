@@ -133,6 +133,14 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 		if (xp >= FishInfoPanel.calculateXpNeededForLevelUp(level)):
 			xp = xp - FishInfoPanel.calculateXpNeededForLevelUp(level)
 			level = level + 1
+			get_node("/root/Node2D/Sound/LevelUp").playing = true
+
+			var levelUpParticle = load("res://particles/level-up-particle.tscn").instantiate()
+			levelUpParticle.position.x = 0
+			levelUpParticle.position.y = -10
+			self.add_child(levelUpParticle)
+			levelUpParticle.emitting = true
+			
 		print("fish ate food")
 		
 		if (self == FishInfoPanel.selectedFish):
