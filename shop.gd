@@ -48,6 +48,7 @@ func revealShop():
 	updateShop()
 	var tween = create_tween()
 	tween.tween_property(shop, "position", Vector2(400,position.y), shopRevealTime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	get_node("/root/Node2D/Sound/MenuOpen").playing = true
 	print("revealed shop")
 
 func updateShop():
@@ -86,6 +87,7 @@ func hideShop():
 	shopButton.tooltip_text = "Open Shop"
 	var tween = create_tween()
 	tween.tween_property(shop, "position", Vector2(480,position.y), shopRevealTime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	get_node("/root/Node2D/Sound/MenuClose").playing = true
 	print("hid shop")
 
 func _ready():

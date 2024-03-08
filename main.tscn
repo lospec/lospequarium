@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=42 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -30,6 +30,8 @@
 [ext_resource type="AudioStream" uid="uid://tnk737dot0pt" path="res://sound/fish-bloop.wav" id="27_l78wf"]
 [ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="28_5jqr6"]
 [ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
+[ext_resource type="AudioStream" uid="uid://utyqqfrmq05g" path="res://sound/open-menu.wav" id="31_dr106"]
+[ext_resource type="AudioStream" uid="uid://cwegjadoqdglc" path="res://sound/close-menu.wav" id="32_eqthy"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -453,6 +455,14 @@ volume_db = -5.056
 [node name="Eat" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("30_e2xhv")
 volume_db = -10.111
+
+[node name="MenuOpen" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("31_dr106")
+volume_db = -5.0
+
+[node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("32_eqthy")
+volume_db = -5.0
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
