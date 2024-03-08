@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=40 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -29,6 +29,7 @@
 [ext_resource type="AudioStream" uid="uid://c6t2salp1stmo" path="res://sound/level-up.wav" id="26_ksoml"]
 [ext_resource type="AudioStream" uid="uid://tnk737dot0pt" path="res://sound/fish-bloop.wav" id="27_l78wf"]
 [ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="28_5jqr6"]
+[ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -448,6 +449,10 @@ stream = ExtResource("27_l78wf")
 [node name="Coin" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("28_5jqr6")
 volume_db = -5.056
+
+[node name="Eat" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("30_e2xhv")
+volume_db = -10.111
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]

@@ -129,6 +129,8 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 		if (hunger < 0): hunger = 0
 		xp = xp + 1
 		collidedObject.queue_free()
+		get_node("/root/Node2D/Sound/Eat").playing = true
+		
 		# TODO: check for level up, and level fish up
 		if (xp >= FishInfoPanel.calculateXpNeededForLevelUp(level)):
 			xp = xp - FishInfoPanel.calculateXpNeededForLevelUp(level)
