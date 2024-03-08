@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dbaes0c8pyao4"]
+[gd_scene load_steps=9 format=3 uid="uid://dbaes0c8pyao4"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_76ggq"]
 [ext_resource type="Texture2D" uid="uid://bwpplriqcwkst" path="res://art/fish/horse-mackerel.png" id="2_f5sab"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_nnntk"]
+[ext_resource type="PackedScene" uid="uid://de6gqr2wtjymj" path="res://particles/bubbles-particles.tscn" id="4_kiivp"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
@@ -52,6 +53,9 @@ position = Vector2(-13, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
 position = Vector2(-9.25, 0.5)
 shape = SubResource("RectangleShape2D_snvvq")
+
+[node name="Bubbles" parent="Mouth" instance=ExtResource("4_kiivp")]
+emitting = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]

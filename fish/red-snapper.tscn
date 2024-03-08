@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://dwaxs5u2rwjkr"]
+[gd_scene load_steps=9 format=3 uid="uid://dwaxs5u2rwjkr"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_0kakg"]
 [ext_resource type="Texture2D" uid="uid://8gpu7v3pyvoy" path="res://art/fish/red-snapper.png" id="2_r0law"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_sjvb0"]
+[ext_resource type="PackedScene" uid="uid://de6gqr2wtjymj" path="res://particles/bubbles-particles.tscn" id="4_pvqyd"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
@@ -52,6 +53,8 @@ shape = SubResource("RectangleShape2D_snvvq")
 
 [node name="MouthPoint" type="Marker2D" parent="Mouth"]
 position = Vector2(-13, 2)
+
+[node name="Bubbles" parent="Mouth" instance=ExtResource("4_pvqyd")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]
