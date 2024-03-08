@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=38 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="23_hmng7"]
 [ext_resource type="AudioStream" uid="uid://bbjyy6gw0ayw3" path="res://sound/somethin-fishy.ogg" id="26_7swpp"]
 [ext_resource type="AudioStream" uid="uid://tnk737dot0pt" path="res://sound/fish-bloop.wav" id="27_l78wf"]
+[ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="28_5jqr6"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -438,6 +439,10 @@ autoplay = true
 
 [node name="Bloop" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("27_l78wf")
+
+[node name="Coin" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("28_5jqr6")
+volume_db = -5.056
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]

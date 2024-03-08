@@ -18,6 +18,7 @@ func _on_area_2d_input_event(viewport, event, shape_idx):
 		queue_free()
 		get_viewport().set_input_as_handled()
 		shop.updateShop()
+		get_node("/root/Node2D/Sound/Coin").playing = true
 		print("clicked coin")
 		
 
