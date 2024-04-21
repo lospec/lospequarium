@@ -10,6 +10,7 @@ var level:int = 1
 var xp:int = 0
 var birth:float = Time.get_unix_time_from_system()
 
+
 var speed = maxSpeed
 
 enum {IDLE, SWIM, FOOD}
@@ -72,6 +73,7 @@ func idle():
 	if (boredom > boredomThreshold):
 		state = SWIM
 		boredom = 0
+		updateOutline()
 	pass
 
 func swim():
@@ -133,8 +135,8 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 		xp = xp + 1
 		collidedObject.queue_free()
 		get_node("/root/Node2D/Sound/Eat").playing = true
+		updateOutline()
 		
-		# TODO: check for level up, and level fish up
 		if (xp >= FishInfoPanel.calculateXpNeededForLevelUp(level)):
 			xp = xp - FishInfoPanel.calculateXpNeededForLevelUp(level)
 			level = level + 1
@@ -145,6 +147,7 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 			levelUpParticle.position.y = -10
 			self.add_child(levelUpParticle)
 			levelUpParticle.emitting = true
+
 			
 		print("fish ate food")
 		
@@ -154,11 +157,14 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 
 func _on_mouse_entered():
 	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+	(sprite.material as ShaderMaterial).set("shader_param/line_color", Vector4(1,1,1,1))
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 	print('hover fish')
 
 func _on_mouse_exited():
 	(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
+	updateOutline()
+	
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	print('unhover fish')
 
@@ -174,3 +180,12 @@ func _on_body_entered(collidedObject):
 	if (collidedObject.name == "Fish"):
 		get_node("/root/Node2D/Sound/Bloop").playing = true
 		print("bloop")
+
+
+func updateOutline():
+
+	if (hunger>hungerThreshold*0.75):
+		(sprite.material as ShaderMaterial).set("shader_param/line_color", Vector4(1, 0.863,0.416,1))
+		(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+	else:
+		(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
