@@ -1,14 +1,14 @@
 extends RigidBody2D
 
-@export var type = "invalid-fish-type"
+var type = "invalid-fish-type"
 @export var properName = "REPLACEME"
-@export var petName = ""
+var petName = ""
 @export var cost:int = 50
 @export var maxSpeed:int = 100
-@export var id:int = -1
-@export var level:int = 1
-@export var xp:int = 0
-@export var birth:float = Time.get_unix_time_from_system()
+var id:int = -1
+var level:int = 1
+var xp:int = 0
+var birth:float = Time.get_unix_time_from_system()
 
 var speed = maxSpeed
 
