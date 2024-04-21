@@ -132,6 +132,7 @@ func _on_upgrade_tank_button_pressed():
 	if (tankSizeCost <= game.money):
 		game.tankSize = game.tankSize + 1
 		game.money = game.money - tankSizeCost
+		get_node("/root/Node2D/Sound/BoughtItem").playing = true
 	updateShop()
 	
 
@@ -146,6 +147,7 @@ func _on_buy_current_item_button_pressed():
 		fishContainer.add_child(newFish)
 		newFish.apply_impulse(Vector2(0,100), Vector2(0.5,0.5))
 		game.addFish(newFish)
+		get_node("/root/Node2D/Sound/BoughtItem").playing = true
 	updateShop()
 
 func roomInTank(): 

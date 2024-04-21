@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=44 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -28,10 +28,12 @@
 [ext_resource type="AudioStream" uid="uid://bbjyy6gw0ayw3" path="res://sound/somethin-fishy.ogg" id="26_7swpp"]
 [ext_resource type="AudioStream" uid="uid://c6t2salp1stmo" path="res://sound/level-up.wav" id="26_ksoml"]
 [ext_resource type="AudioStream" uid="uid://tnk737dot0pt" path="res://sound/fish-bloop.wav" id="27_l78wf"]
+[ext_resource type="AudioStream" uid="uid://bih48in13e4uj" path="res://sound/kaching.ogg" id="27_ml0hy"]
 [ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="28_5jqr6"]
 [ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
 [ext_resource type="AudioStream" uid="uid://utyqqfrmq05g" path="res://sound/open-menu.wav" id="31_dr106"]
 [ext_resource type="AudioStream" uid="uid://cwegjadoqdglc" path="res://sound/close-menu.wav" id="32_eqthy"]
+[ext_resource type="AudioStream" uid="uid://cuiqctqpaf5ag" path="res://sound/no-no.ogg" id="32_m7gsi"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -441,6 +443,10 @@ texture = ExtResource("18_pwm8v")
 stream = ExtResource("26_ksoml")
 volume_db = -9.75
 
+[node name="BoughtItem" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("27_ml0hy")
+volume_db = -9.75
+
 [node name="Music" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("26_7swpp")
 autoplay = true
@@ -458,6 +464,10 @@ volume_db = -10.111
 
 [node name="MenuOpen" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("31_dr106")
+volume_db = -5.0
+
+[node name="CantAfford" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("32_m7gsi")
 volume_db = -5.0
 
 [node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
