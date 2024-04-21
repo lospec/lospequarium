@@ -124,8 +124,11 @@ func food():
 
 
 func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_index, local_shape_index):
-	if (state == FOOD && collidedObject.name == "Food"):
-		hunger = hunger - collidedObject.value
+	
+	print("mouth collide from ",properName," with ",collidedObject.name,"(", collidedObject.get_parent().name,")"," /state:",state)
+	
+	if (state == FOOD && collidedObject.is_in_group("food")):
+		#hunger = hunger - collidedObject.value
 		if (hunger < 0): hunger = 0
 		xp = xp + 1
 		collidedObject.queue_free()
@@ -147,6 +150,7 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 		
 		if (self == FishInfoPanel.selectedFish):
 			FishInfoPanel.updateXP()
+
 
 func _on_mouse_entered():
 	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
