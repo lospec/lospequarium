@@ -147,7 +147,7 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 			levelUpParticle.position.y = -10
 			self.add_child(levelUpParticle)
 			levelUpParticle.emitting = true
-
+			levelUpOutline()
 			
 		print("fish ate food")
 		
@@ -181,11 +181,35 @@ func _on_body_entered(collidedObject):
 		get_node("/root/Node2D/Sound/Bloop").playing = true
 		print("bloop")
 
-
 func updateOutline():
-
 	if (hunger>hungerThreshold*0.75):
 		(sprite.material as ShaderMaterial).set("shader_param/line_color", Vector4(1, 0.863,0.416,1))
 		(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
 	else:
 		(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
+
+func levelUpOutline():
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(0.15).timeout
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(0.15).timeout	
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(0.15).timeout	
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(1.0).timeout
+	updateOutline()
+	
+func outlineOn():
+	(sprite.material as ShaderMaterial).set("shader_param/line_color", Color(0.553, 0.757, 0.337))
+	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+
+func outlineOff():
+	(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
