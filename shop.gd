@@ -154,3 +154,18 @@ func roomInTank():
 	print("tanksize: ",game.tankSize," | current fish: ",fishContainer.get_child_count(), " | room in tank: ",str(game.tankSize > fishContainer.get_child_count()))
 	return (game.tankSize > fishContainer.get_child_count()) 
 	
+
+
+func _on_buy_current_item_button_gui_input(event):
+	checkIfClickedShopButtonIsDisable(event, buyCurrentItemButton)
+
+func _on_upgrade_tank_button_gui_input(event):
+	checkIfClickedShopButtonIsDisable(event, buyTankUpgradeButton)
+
+func checkIfClickedShopButtonIsDisable (event, button):
+	if (event is InputEventMouseButton && event.pressed && event.button_index==1):
+		if (button.disabled):
+			get_node("/root/Node2D/Sound/CantBuy").playing = true
+
+
+

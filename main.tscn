@@ -466,16 +466,18 @@ volume_db = -10.111
 stream = ExtResource("31_dr106")
 volume_db = -5.0
 
-[node name="CantAfford" type="AudioStreamPlayer" parent="Sound"]
+[node name="CantBuy" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_m7gsi")
-volume_db = -5.0
+volume_db = -20.528
 
 [node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_eqthy")
 volume_db = -5.0
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
+[connection signal="gui_input" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
+[connection signal="gui_input" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]
