@@ -23,7 +23,8 @@ var lastRefresh = Time.get_ticks_msec()
 var shopItems = Array(DirAccess.get_files_at("res://fish/")).map(createFishDB)
 
 func createFishDB(f):
-	var path = "res://fish/"+f
+	print('processing fish ',f.replace('.remap', ''))
+	var path = "res://fish/"+f.replace('.remap', '')
 	var scene = load(path)
 	var instance = scene.instantiate()
 	var newFishData = {
