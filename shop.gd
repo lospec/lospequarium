@@ -20,23 +20,22 @@ var lastRefresh = Time.get_ticks_msec()
 
 @export var isOpen = false
 
-var starterFish = [
-	load("res://fish/black-bass.tscn"),
-	load("res://fish/carp.tscn"),
-	load("res://fish/horse-mackerel.tscn"),
-]
+var shopItems = Array(DirAccess.get_files_at("res://fish/")).map(createFishDB)
 
-var shopItems = [
-	load("res://fish/black-bass.tscn"),
-	load("res://fish/carp.tscn"),
-	load("res://fish/horse-mackerel.tscn"),
-	load("res://fish/rainbow-trout.tscn"),
-	load("res://fish/red-snapper.tscn"),
-	load("res://fish/sockeye-salmon.tscn"),
-	load("res://fish/silver-carp.tscn"),
-	load("res://fish/barred-knifejaw.tscn"),
-	load("res://fish/saddled-bichir.tscn"),
-];
+func createFishDB(f):
+	var path = "res://fish/"+f
+	var scene = load(path)
+	var instance = scene.instantiate()
+	var newFishData = {
+		"cost": instance.cost,
+		"properName": instance.properName,
+		"texture": instance.find_child("Sprite2D").texture,
+		"rarity": instance.rarity,
+		"path": path,
+	}
+	instance.queue_free()
+	return newFishData
+
 
 var currentItem
 var rng = RandomNumberGenerator.new()
@@ -91,6 +90,10 @@ func hideShop():
 	print("hid shop")
 
 func _ready():
+	print("Fish Database:")
+	for r in range(16):
+		var fishOfThisRarity = shopItems.filter(func(f): return f.rarity==r)
+		print("rarity-",r," [",fishOfThisRarity.size()," fish] ", fishOfThisRarity.reduce(func(acc,f): return acc + f.properName+", ",""))
 	refreshShop()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -104,24 +107,20 @@ func refreshShop():
 	print("refresh shop")
 	lastRefresh = Time.get_ticks_msec() 
 	
-	var stock = shopItems
-	if (fishContainer.get_child_count() == 0): stock = starterFish
+	var skipTankSizeCheck = (game.tankSize == 0) # refreshShop gets called right away before the game data has loaded, and it thinks tank size is 0, which means no fish get matched, so we have to trick it into skipping the tank size check otherwise it will get an infinite loop because no fish have a rarity of 0, or if we exit and dont pick a current fish, then when the user clicks the shop button, the game will crash (sorry)
+	
+	var newItem
+	while (!newItem):
+		var possibleNewItem = shopItems[rng.randi_range(0,shopItems.size()-1)]
+		var diceRoll = rng.randi_range(1, possibleNewItem.rarity)
+		print("possiblenewitem", possibleNewItem.rarity <= game.tankSize , possibleNewItem, game.tankSize, "/", game.money)
+		if (diceRoll == 1 && (skipTankSizeCheck || possibleNewItem.rarity <= game.tankSize)):
+			newItem = possibleNewItem
 
-	var newItemIndex = rng.randi_range(0,stock.size()-1)
-	print("newItemIndex",newItemIndex,stock[newItemIndex])
-	var newItem = stock[newItemIndex]
-	var instantiatedItem = newItem.instantiate()
-	
-	currentItem = {}
-	currentItem.scene = newItem
-	currentItem.cost = instantiatedItem.cost
-	currentItem.properName = instantiatedItem.properName
-	currentItem.texture = instantiatedItem.find_child("Sprite2D").texture
-	instantiatedItem.queue_free()
-	
-	print("new item", currentItem)
+	print("picked a new item:",newItem)
+	currentItem = newItem
+
 	updateShop()
-	
 
 func _on_shop_button_pressed():
 	if isOpen: hideShop()
@@ -139,7 +138,8 @@ func _on_upgrade_tank_button_pressed():
 func _on_buy_current_item_button_pressed():
 	if (currentItem.cost <= game.money && roomInTank()): 
 		game.money = game.money - currentItem.cost
-		var newFish = currentItem.scene.instantiate()
+		var fishScene = load(currentItem.path)
+		var newFish = fishScene.instantiate()
 		newFish.position.x = rng.randi_range(20, 380)
 		newFish.position.y = 10
 		print("namne",newFish.scene_file_path)
