@@ -1,16 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://drxyltfghnn6b"]
+[gd_scene load_steps=9 format=3 uid="uid://drxyltfghnn6b"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_lj3ua"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_1y5k8"]
 [ext_resource type="Texture2D" uid="uid://bi63hhybupos3" path="res://art/fish/barred-knifejaw.png" id="3_b1spt"]
+[ext_resource type="PackedScene" uid="uid://de6gqr2wtjymj" path="res://particles/bubbles-particles.tscn" id="4_e6oi6"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
 bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 7.0
-height = 28.0
+radius = 12.0
+height = 32.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3bheg"]
 shader = ExtResource("2_1y5k8")
@@ -31,8 +32,9 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_lj3ua")
 properName = "Barred Knifejaw"
-cost = 140
+cost = 400
 maxSpeed = 20
+rarity = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -45,6 +47,9 @@ texture = ExtResource("3_b1spt")
 [node name="Mouth" type="Area2D" parent="."]
 collision_layer = 2
 collision_mask = 2
+
+[node name="Bubbles" parent="Mouth" instance=ExtResource("4_e6oi6")]
+position = Vector2(-27, 2)
 
 [node name="MouthPoint" type="Marker2D" parent="Mouth"]
 position = Vector2(-13, 2)

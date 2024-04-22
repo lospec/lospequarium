@@ -1,16 +1,16 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjjwvut0vdu3t"]
+[gd_scene load_steps=9 format=3 uid="uid://cjjwvut0vdu3t"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_xnwuk"]
 [ext_resource type="Texture2D" uid="uid://6g23jh8ypxwy" path="res://art/fish/sockeye-salmon.png" id="2_f0ka8"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_t6pja"]
+[ext_resource type="PackedScene" uid="uid://de6gqr2wtjymj" path="res://particles/bubbles-particles.tscn" id="4_i8qfq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
 bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 7.0
-height = 28.0
+height = 34.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2nvic"]
 shader = ExtResource("2_t6pja")
@@ -31,8 +31,9 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_xnwuk")
 properName = "Sockeye Salmon"
-cost = 90
+cost = 250
 maxSpeed = 25
+rarity = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -52,6 +53,8 @@ position = Vector2(-13, 3)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
 position = Vector2(-8.25, 2.5)
 shape = SubResource("RectangleShape2D_snvvq")
+
+[node name="Bubbles" parent="Mouth" instance=ExtResource("4_i8qfq")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://di8flof2sstvq"]
+
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="1_x2pux"]
+
+[sub_resource type="Theme" id="Theme_3uldi"]
+Label/colors/font_color = Color(0.286275, 0.333333, 0.533333, 1)
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("1_x2pux")
+
+[node name="Credits" type="Node2D"]
+
+[node name="Credits" type="Label" parent="."]
+offset_left = 20.0
+offset_top = 42.0
+offset_right = 484.0
+offset_bottom = 271.0
+theme = SubResource("Theme_3uldi")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "Created for the citizens of Lozpekistan
+
+Skeddles - Programming, Game Design, Background Art, Fish Art, UI Art
+
+GG - UI Art
+
+Special Thanks for Godot Support from the Godot Discord Server
+parapixel, Hugh Mann, senormagichands, JJ, Fishy, zacryol, bibizu, Avie, WeaverSong
+
+PureAsbestos - Coined \"Lospequarium\""
+horizontal_alignment = 1

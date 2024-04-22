@@ -1,16 +1,17 @@
-[gd_scene load_steps=8 format=3 uid="uid://kcap8lx875rd"]
+[gd_scene load_steps=9 format=3 uid="uid://kcap8lx875rd"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_pffkj"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_etqss"]
 [ext_resource type="Texture2D" uid="uid://mjnnis74ugrj" path="res://art/fish/silver-carp.png" id="3_mxqdu"]
+[ext_resource type="PackedScene" uid="uid://de6gqr2wtjymj" path="res://particles/bubbles-particles.tscn" id="4_cany7"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
 bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 7.0
-height = 28.0
+radius = 8.0
+height = 34.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3bheg"]
 shader = ExtResource("2_etqss")
@@ -31,8 +32,9 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_pffkj")
 properName = "Silver Carp"
-cost = 150
+cost = 260
 maxSpeed = 40
+rarity = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -52,6 +54,8 @@ position = Vector2(-13, 2)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
 position = Vector2(-8.75, 0.5)
 shape = SubResource("RectangleShape2D_snvvq")
+
+[node name="Bubbles" parent="Mouth" instance=ExtResource("4_cany7")]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]

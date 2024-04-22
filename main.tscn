@@ -1,9 +1,11 @@
-[gd_scene load_steps=35 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=47 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
 [ext_resource type="Texture2D" uid="uid://chd1smjh0dkgi" path="res://art/tanks/demo.png" id="1_ur807"]
 [ext_resource type="PackedScene" uid="uid://c343ujjd7uavt" path="res://fish.tscn" id="2_am8qu"]
+[ext_resource type="Shader" path="res://shaders/scrolling-shader.gdshader" id="3_053vm"]
+[ext_resource type="Texture2D" uid="uid://cb7cxufgxqs4l" path="res://art/tanks/waves.png" id="4_u6gtm"]
 [ext_resource type="Texture2D" uid="uid://3qttc4rgjmdp" path="res://art/ui/coin.png" id="5_gm5n3"]
 [ext_resource type="Theme" uid="uid://ydbe81qfcfi3" path="res://theme.tres" id="7_njjdw"]
 [ext_resource type="Texture2D" uid="uid://b1q7gmfd80ql6" path="res://art/ui/dialog.png" id="8_d01k8"]
@@ -25,6 +27,15 @@
 [ext_resource type="Texture2D" uid="uid://dj44nubpby3xc" path="res://art/ui/close-down.png" id="21_sey11"]
 [ext_resource type="Texture2D" uid="uid://dwajr5jv00bs2" path="res://art/ui/close-hover.png" id="22_i3grg"]
 [ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="23_hmng7"]
+[ext_resource type="AudioStream" uid="uid://bbjyy6gw0ayw3" path="res://sound/somethin-fishy.ogg" id="26_7swpp"]
+[ext_resource type="AudioStream" uid="uid://c6t2salp1stmo" path="res://sound/level-up.wav" id="26_ksoml"]
+[ext_resource type="AudioStream" uid="uid://tnk737dot0pt" path="res://sound/fish-bloop.wav" id="27_l78wf"]
+[ext_resource type="AudioStream" uid="uid://bih48in13e4uj" path="res://sound/kaching.ogg" id="27_ml0hy"]
+[ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="28_5jqr6"]
+[ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
+[ext_resource type="AudioStream" uid="uid://utyqqfrmq05g" path="res://sound/open-menu.wav" id="31_dr106"]
+[ext_resource type="AudioStream" uid="uid://cwegjadoqdglc" path="res://sound/close-menu.wav" id="32_eqthy"]
+[ext_resource type="AudioStream" uid="uid://cuiqctqpaf5ag" path="res://sound/no-no.ogg" id="32_m7gsi"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -69,6 +80,10 @@ Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 0
 Label/font_sizes/font_size = 13
 Label/fonts/font = ExtResource("16_txocg")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skyyh"]
+shader = ExtResource("3_053vm")
+shader_parameter/speed = 0.1
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rauu0")
@@ -428,8 +443,65 @@ theme_override_font_sizes/font_size = 8
 position = Vector2(-63, 172)
 texture = ExtResource("18_pwm8v")
 
+[node name="Sound" type="Node2D" parent="."]
+
+[node name="LevelUp" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("26_ksoml")
+volume_db = -9.75
+
+[node name="BoughtItem" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("27_ml0hy")
+volume_db = -9.75
+
+[node name="Music" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("26_7swpp")
+autoplay = true
+
+[node name="Bloop" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("27_l78wf")
+
+[node name="Coin" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("28_5jqr6")
+volume_db = -5.056
+
+[node name="Eat" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("30_e2xhv")
+volume_db = -10.111
+
+[node name="MenuOpen" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("31_dr106")
+volume_db = -5.0
+
+[node name="CantBuy" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("32_m7gsi")
+volume_db = -20.528
+
+[node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("32_eqthy")
+volume_db = -5.0
+
+[node name="Waves" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(97, 39)
+texture = ExtResource("4_u6gtm")
+
+[node name="Waves2" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(315, 39)
+texture = ExtResource("4_u6gtm")
+
+[node name="Waves3" type="Sprite2D" parent="."]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(533, 39)
+texture = ExtResource("4_u6gtm")
+
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
+[connection signal="gui_input" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
+[connection signal="gui_input" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]

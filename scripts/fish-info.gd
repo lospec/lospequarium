@@ -18,6 +18,7 @@ func revealInfo():
 	updateInfo()
 	var tween = create_tween()
 	tween.tween_property(panel, "position", Vector2(-18,position.y), panelRevealTime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
+	get_node("/root/Node2D/Sound/MenuOpen").playing = true
 	print("revealed fish info")
 	
 func hideInfo():
@@ -25,6 +26,7 @@ func hideInfo():
 	var tween = create_tween()
 	tween.tween_property(panel, "position", Vector2(-98,position.y), panelRevealTime).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	get_node("/root/Node2D/UI/FishInfo/DebugText").text = ""
+	get_node("/root/Node2D/Sound/MenuClose").playing = true
 	print("hid fish info")
 
 func updateInfo():

@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cfpi0xradogvp"]
+[gd_scene load_steps=9 format=3 uid="uid://cfpi0xradogvp"]
 
 [ext_resource type="Script" path="res://fish.gd" id="1_s57gb"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_u6luk"]
 [ext_resource type="Texture2D" uid="uid://wie233m6qfgx" path="res://art/fish/saddled-bichir.png" id="3_fb6vs"]
+[ext_resource type="PackedScene" uid="uid://de6gqr2wtjymj" path="res://particles/bubbles-particles.tscn" id="4_r00yx"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_kuxgs"]
 friction = 0.59
@@ -10,7 +11,7 @@ bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
 radius = 7.0
-height = 28.0
+height = 34.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3bheg"]
 shader = ExtResource("2_u6luk")
@@ -31,8 +32,9 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_s57gb")
 properName = "Saddled Bichir"
-cost = 200
+cost = 480
 maxSpeed = 70
+rarity = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -48,6 +50,8 @@ collision_mask = 2
 
 [node name="MouthPoint" type="Marker2D" parent="Mouth"]
 position = Vector2(-13, 2)
+
+[node name="Bubbles" parent="Mouth" instance=ExtResource("4_r00yx")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Mouth"]
 position = Vector2(-8.75, 0.5)

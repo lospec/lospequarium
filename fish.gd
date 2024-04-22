@@ -1,14 +1,21 @@
 extends RigidBody2D
 
-@export var type = "invalid-fish-type"
+## Actual name of the type of fish, with proper capitalization.
 @export var properName = "REPLACEME"
-@export var petName = ""
+## How much the fish costs to purchase from the shop (should roughly be tied to rarity).
 @export var cost:int = 50
+## The speed the fish swims, at it's fastest.
 @export var maxSpeed:int = 100
-@export var id:int = -1
-@export var level:int = 1
-@export var xp:int = 0
-@export var birth:float = Time.get_unix_time_from_system()
+## Higher numbers have a higher chance of being skipped when picking next shop item. It also determines the fish tank size tier the player must have in order to see it. [0=starter; 1=50%; 5=80% chance to skip/spent$1000 and 10 means they spent $16000 on tank upgrades and there's a 90% chance it will be skipped
+@export var rarity:int = 1;
+
+var type = "invalid-fish-type" 
+var petName = ""
+var id:int = -1
+var level:int = 1
+var xp:int = 0
+var birth:float = Time.get_unix_time_from_system()
+
 
 var speed = maxSpeed
 
@@ -72,6 +79,7 @@ func idle():
 	if (boredom > boredomThreshold):
 		state = SWIM
 		boredom = 0
+		updateOutline()
 	pass
 
 func swim():
@@ -124,27 +132,45 @@ func food():
 
 
 func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_index, local_shape_index):
-	if (state == FOOD && collidedObject.name == "Food"):
+	
+	print("mouth collide from ",properName," with ",collidedObject.name,"(", collidedObject.get_parent().name,")"," /state:",state)
+	
+	if (state == FOOD && collidedObject.is_in_group("food")):
 		hunger = hunger - collidedObject.value
 		if (hunger < 0): hunger = 0
 		xp = xp + 1
 		collidedObject.queue_free()
-		# TODO: check for level up, and level fish up
+		get_node("/root/Node2D/Sound/Eat").playing = true
+		updateOutline()
+		
 		if (xp >= FishInfoPanel.calculateXpNeededForLevelUp(level)):
 			xp = xp - FishInfoPanel.calculateXpNeededForLevelUp(level)
 			level = level + 1
+			get_node("/root/Node2D/Sound/LevelUp").playing = true
+
+			var levelUpParticle = load("res://particles/level-up-particle.tscn").instantiate()
+			levelUpParticle.position.x = 0
+			levelUpParticle.position.y = -10
+			self.add_child(levelUpParticle)
+			levelUpParticle.emitting = true
+			levelUpOutline()
+			
 		print("fish ate food")
 		
 		if (self == FishInfoPanel.selectedFish):
 			FishInfoPanel.updateXP()
 
+
 func _on_mouse_entered():
 	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+	(sprite.material as ShaderMaterial).set("shader_param/line_color", Vector4(1,1,1,1))
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 	print('hover fish')
 
 func _on_mouse_exited():
 	(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
+	updateOutline()
+	
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 	print('unhover fish')
 
@@ -154,3 +180,42 @@ func _on_input_event(viewport, event, shape_idx):
 		FishInfoPanel.revealInfo()
 		print("clicked fish")
 		
+
+
+func _on_body_entered(collidedObject):
+	if (collidedObject.name == "Fish"):
+		get_node("/root/Node2D/Sound/Bloop").playing = true
+		print("bloop")
+
+func updateOutline():
+	if (hunger>hungerThreshold*0.75):
+		(sprite.material as ShaderMaterial).set("shader_param/line_color", Vector4(1, 0.863,0.416,1))
+		(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+	else:
+		(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
+
+func levelUpOutline():
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(0.15).timeout
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(0.15).timeout	
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(0.15).timeout	
+	outlineOn()
+	await get_tree().create_timer(0.15).timeout
+	outlineOff()
+	await get_tree().create_timer(1.0).timeout
+	updateOutline()
+	
+func outlineOn():
+	(sprite.material as ShaderMaterial).set("shader_param/line_color", Color(0.553, 0.757, 0.337))
+	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
+
+func outlineOff():
+	(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
