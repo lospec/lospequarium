@@ -114,7 +114,9 @@ func refreshShop():
 		var possibleNewItem = shopItems[rng.randi_range(0,shopItems.size()-1)]
 		var diceRoll = rng.randi_range(1, possibleNewItem.rarity)
 		print("possiblenewitem", possibleNewItem.rarity <= game.tankSize , possibleNewItem, game.tankSize, "/", game.money)
-		if (diceRoll == 1 && (skipTankSizeCheck || possibleNewItem.rarity <= game.tankSize)):
+		if (skipTankSizeCheck && possibleNewItem.rarity == 1):
+			newItem = possibleNewItem
+		elif (diceRoll == 1 && possibleNewItem.rarity <= game.tankSize):
 			newItem = possibleNewItem
 
 	print("picked a new item:",newItem)
