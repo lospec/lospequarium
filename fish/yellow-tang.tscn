@@ -10,8 +10,8 @@ friction = 0.59
 bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 5.0
-height = 12.0
+radius = 8.0
+height = 18.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iyoes"]
 shader = ExtResource("2_semgj")
@@ -33,7 +33,7 @@ linear_damp = 0.5
 script = ExtResource("1_nhcqw")
 properName = "Yellow Tang"
 cost = 30
-maxSpeed = 40
+maxSpeed = 20
 rarity = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -10,8 +10,8 @@ friction = 0.59
 bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 7.0
-height = 28.0
+radius = 11.0
+height = 34.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3bheg"]
 shader = ExtResource("2_qo58l")
@@ -37,6 +37,7 @@ maxSpeed = 25
 rarity = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_4m0br")
 

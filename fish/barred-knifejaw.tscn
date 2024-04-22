@@ -10,8 +10,8 @@ friction = 0.59
 bounce = 0.35
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4m0br"]
-radius = 7.0
-height = 28.0
+radius = 12.0
+height = 32.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3bheg"]
 shader = ExtResource("2_1y5k8")
