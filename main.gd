@@ -89,16 +89,16 @@ func saveGame():
 	lastSave = Time.get_ticks_msec()
 	print("saved save data")
 	
-func updateFishData(fish):
+func updateFishData(fishy):
 	var spawnedFish = fishContainer.get_children()
 	for f in spawnedFish:
-		if fish.id == f.id:
-			fish.hunger = f.hunger
-			fish.level = f.level
-			fish.xp = f.xp
-			fish.birth = f.birth
+		if fishy.id == f.id:
+			fishy.hunger = f.hunger
+			fishy.level = f.level
+			fishy.xp = f.xp
+			fishy.birth = f.birth
 			return
-	print("failed to find matching fish when saving fish data. id:",fish.id)
+	print("failed to find matching fish when saving fish data. id:",fishy.id)
 
 
 func _on_sell_button_pressed():
