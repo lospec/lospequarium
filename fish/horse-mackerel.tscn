@@ -32,8 +32,9 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_76ggq")
 properName = "Horse Mackerel"
-cost = 45
+cost = 110
 maxSpeed = 60
+rarity = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
@@ -55,7 +56,6 @@ position = Vector2(-9.25, 0.5)
 shape = SubResource("RectangleShape2D_snvvq")
 
 [node name="Bubbles" parent="Mouth" instance=ExtResource("4_kiivp")]
-emitting = false
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="input_event" from="." to="." method="_on_input_event"]

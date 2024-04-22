@@ -32,8 +32,9 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_rpa7d")
 properName = "Black Bass"
-cost = 30
+cost = 40
 maxSpeed = 25
+rarity = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

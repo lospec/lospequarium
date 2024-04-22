@@ -34,6 +34,7 @@ script = ExtResource("1_nhcqw")
 properName = "Yellow Tang"
 cost = 30
 maxSpeed = 40
+rarity = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708

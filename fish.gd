@@ -1,10 +1,16 @@
 extends RigidBody2D
 
-var type = "invalid-fish-type"
+## Actual name of the type of fish, with proper capitalization.
 @export var properName = "REPLACEME"
-var petName = ""
+## How much the fish costs to purchase from the shop (should roughly be tied to rarity).
 @export var cost:int = 50
+## The speed the fish swims, at it's fastest.
 @export var maxSpeed:int = 100
+## Higher numbers have a higher chance of being skipped when picking next shop item. It also determines the fish tank size tier the player must have in order to see it. [0=starter; 1=50%; 5=80% chance to skip/spent$1000 and 10 means they spent $16000 on tank upgrades and there's a 90% chance it will be skipped
+@export var rarity:int = 1;
+
+var type = "invalid-fish-type" 
+var petName = ""
 var id:int = -1
 var level:int = 1
 var xp:int = 0
