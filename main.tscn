@@ -52,6 +52,10 @@ distance = 0.5
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qlkg4"]
 distance = -269.5
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skyyh"]
+shader = ExtResource("3_053vm")
+shader_parameter/speed = 0.1
+
 [sub_resource type="Theme" id="Theme_5vd60"]
 Label/colors/font_color = Color(0.815686, 0.254902, 0.32549, 1)
 Label/font_sizes/font_size = 8
@@ -80,10 +84,6 @@ Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 0
 Label/font_sizes/font_size = 13
 Label/fonts/font = ExtResource("16_txocg")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_skyyh"]
-shader = ExtResource("3_053vm")
-shader_parameter/speed = 0.1
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rauu0")
@@ -117,6 +117,24 @@ shape = SubResource("WorldBoundaryShape2D_qlkg4")
 [node name="BG" type="Sprite2D" parent="Tank"]
 texture = ExtResource("1_ur807")
 centered = false
+
+[node name="Waves" type="Sprite2D" parent="Tank"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(97, 39)
+texture = ExtResource("4_u6gtm")
+
+[node name="Waves2" type="Sprite2D" parent="Tank"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(315, 39)
+texture = ExtResource("4_u6gtm")
+
+[node name="Waves3" type="Sprite2D" parent="Tank"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(533, 39)
+texture = ExtResource("4_u6gtm")
 
 [node name="Food" type="Node2D" parent="."]
 
@@ -479,24 +497,6 @@ volume_db = -20.528
 [node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_eqthy")
 volume_db = -5.0
-
-[node name="Waves" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_skyyh")
-position = Vector2(97, 39)
-texture = ExtResource("4_u6gtm")
-
-[node name="Waves2" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_skyyh")
-position = Vector2(315, 39)
-texture = ExtResource("4_u6gtm")
-
-[node name="Waves3" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_skyyh")
-position = Vector2(533, 39)
-texture = ExtResource("4_u6gtm")
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="gui_input" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_gui_input"]
