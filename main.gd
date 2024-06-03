@@ -103,3 +103,4 @@ func updateFishData(fishy):
 
 func _on_sell_button_pressed():
 	print("sell fish")
+

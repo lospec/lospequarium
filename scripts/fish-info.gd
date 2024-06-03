@@ -109,3 +109,16 @@ func updateDebugText():
 	fishInfo += "moneyDropCoolDown: " + str(fish.moneyDropCoolDown) + "\n"
 	
 	get_node("/root/Node2D/UI/FishInfo/DebugText").text = fishInfo
+
+func _on_rename_area_mouse_entered():
+	$RenameButton.visible = true
+
+func _on_rename_area_mouse_exited():
+	$RenameButton.visible = false
+
+func _on_rename_button_pressed():
+	$FishName.grab_focus()
+	$FishName.column = $FishName.text.size()
+
+func _on_fish_name_text_submitted(new_text):
+	$FishName.release_focus()
