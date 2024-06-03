@@ -31,7 +31,7 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_qchlp")
 properName = "Butterfly Koi"
-cost = 430
+cost = 310
 maxSpeed = 30
 rarity = 4
 
