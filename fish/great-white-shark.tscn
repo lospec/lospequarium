@@ -33,7 +33,7 @@ linear_damp = 0.5
 script = ExtResource("1_3p73s")
 properName = "Great White"
 cost = 1200
-maxSpeed = 85
+maxSpeed = 95
 rarity = 7
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
