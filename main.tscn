@@ -466,37 +466,46 @@ texture = ExtResource("18_pwm8v")
 [node name="LevelUp" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("26_ksoml")
 volume_db = -9.75
+bus = &"Effects"
 
 [node name="BoughtItem" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("27_ml0hy")
 volume_db = -9.75
+bus = &"Effects"
 
 [node name="Music" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("26_7swpp")
 autoplay = true
+bus = &"Music"
 
 [node name="Bloop" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("27_l78wf")
+bus = &"Effects"
 
 [node name="Coin" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("28_5jqr6")
 volume_db = -5.056
+bus = &"Effects"
 
 [node name="Eat" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("30_e2xhv")
 volume_db = -10.111
+bus = &"Effects"
 
 [node name="MenuOpen" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("31_dr106")
 volume_db = -5.0
+bus = &"Effects"
 
 [node name="CantBuy" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_m7gsi")
 volume_db = -20.528
+bus = &"Effects"
 
 [node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_eqthy")
 volume_db = -5.0
+bus = &"Effects"
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="gui_input" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_gui_input"]
