@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=51 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -37,6 +37,7 @@
 [ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
 [ext_resource type="Script" path="res://scripts/settings.gd" id="30_x0fdv"]
 [ext_resource type="AudioStream" uid="uid://utyqqfrmq05g" path="res://sound/open-menu.wav" id="31_dr106"]
+[ext_resource type="Theme" uid="uid://c6kye7f6w1nnt" path="res://themes/small-text.tres" id="31_tuoq2"]
 [ext_resource type="AudioStream" uid="uid://cwegjadoqdglc" path="res://sound/close-menu.wav" id="32_eqthy"]
 [ext_resource type="AudioStream" uid="uid://cuiqctqpaf5ag" path="res://sound/no-no.ogg" id="32_m7gsi"]
 
@@ -496,6 +497,100 @@ theme = ExtResource("7_njjdw")
 text = "Settings"
 horizontal_alignment = 1
 
+[node name="Volume" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 84.0
+offset_right = 55.0
+offset_bottom = 92.0
+theme = ExtResource("31_tuoq2")
+text = "Music"
+horizontal_alignment = 2
+
+[node name="MusicLabel" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 63.0
+offset_right = 365.0
+offset_bottom = 71.0
+theme = ExtResource("31_tuoq2")
+text = "Volume:"
+horizontal_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 78.0
+offset_right = 335.0
+offset_bottom = 98.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_njjdw")
+
+[node name="MusicPercent" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 84.0
+offset_right = 367.0
+offset_bottom = 92.0
+theme = ExtResource("31_tuoq2")
+text = "100%"
+
+[node name="EffectsLabel" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 115.0
+offset_right = 55.0
+offset_bottom = 123.0
+theme = ExtResource("31_tuoq2")
+text = "Effects"
+horizontal_alignment = 2
+
+[node name="EffectsSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 109.0
+offset_right = 335.0
+offset_bottom = 129.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_njjdw")
+
+[node name="EffectsPercent" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 115.0
+offset_right = 367.0
+offset_bottom = 123.0
+theme = ExtResource("31_tuoq2")
+text = "100%"
+
+[node name="MasterLabel" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 148.0
+offset_right = 55.0
+offset_bottom = 156.0
+theme = ExtResource("31_tuoq2")
+text = "Master"
+horizontal_alignment = 2
+
+[node name="MasterSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 142.0
+offset_right = 335.0
+offset_bottom = 162.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_njjdw")
+
+[node name="MasterPercent" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 148.0
+offset_right = 367.0
+offset_bottom = 156.0
+theme = ExtResource("31_tuoq2")
+text = "100%"
+
 [node name="Xp-bar-full" type="Sprite2D" parent="."]
 position = Vector2(-63, 172)
 texture = ExtResource("18_pwm8v")
@@ -554,3 +649,6 @@ bus = &"Effects"
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]
+[connection signal="value_changed" from="UI/Settings/MusicSlider" to="UI/Settings" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="UI/Settings/EffectsSlider" to="UI/Settings" method="_on_effects_slider_value_changed"]
+[connection signal="value_changed" from="UI/Settings/MasterSlider" to="UI/Settings" method="_on_master_slider_value_changed"]
