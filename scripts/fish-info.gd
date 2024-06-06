@@ -118,7 +118,20 @@ func _on_rename_area_mouse_exited():
 
 func _on_rename_button_pressed():
 	$FishName.grab_focus()
-	$FishName.column = $FishName.text.size()
+	$FishName.caret_column = $FishName.text.length()
 
 func _on_fish_name_text_submitted(new_text):
 	$FishName.release_focus()
+
+
+func _on_rename_area_input_event(viewport, event, shape_idx):
+	pass
+	var physicsSpace = get_world_2d().direct_space_state
+	var query_parameters = PhysicsPointQueryParameters2D.new()
+	query_parameters.collide_with_areas = true
+	query_parameters.position = event.position
+	var intersections = physicsSpace.intersect_point(query_parameters)
+	for i in intersections:
+		if i.collider == self or i.collider == $FishName or i.collider == $RenameButton: 
+			$RenameButton.visible = true
+			print("showy")

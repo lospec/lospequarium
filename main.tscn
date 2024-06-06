@@ -471,17 +471,6 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("15_fg7uf")
 theme_override_font_sizes/font_size = 8
 
-[node name="RenameButton" type="TextureButton" parent="UI/FishInfo"]
-visible = false
-offset_left = 78.0
-offset_top = 10.0
-offset_right = 87.0
-offset_bottom = 19.0
-tooltip_text = "Rename Fish"
-mouse_default_cursor_shape = 2
-theme = ExtResource("8_pmiyt")
-texture_normal = ExtResource("30_eiogn")
-
 [node name="RenameArea" type="Area2D" parent="UI/FishInfo"]
 z_index = 20
 position = Vector2(78, 10)
@@ -497,6 +486,7 @@ offset_top = 11.0
 offset_right = 87.0
 offset_bottom = 19.0
 tooltip_text = "Fish Name"
+mouse_filter = 1
 theme = ExtResource("8_pmiyt")
 theme_override_colors/font_color = Color(0.286275, 0.333333, 0.533333, 1)
 theme_override_fonts/font = ExtResource("15_fg7uf")
@@ -513,6 +503,18 @@ middle_mouse_paste_enabled = false
 selecting_enabled = false
 caret_blink = true
 caret_blink_interval = 0.2
+
+[node name="RenameButton" type="TextureButton" parent="UI/FishInfo"]
+visible = false
+layout_mode = 0
+offset_left = 78.0
+offset_top = 10.0
+offset_right = 87.0
+offset_bottom = 19.0
+tooltip_text = "Rename Fish"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("30_eiogn")
 
 [node name="Settings" type="NinePatchRect" parent="UI"]
 offset_left = 57.0
@@ -692,10 +694,11 @@ bus = &"Effects"
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]
-[connection signal="pressed" from="UI/FishInfo/RenameButton" to="UI/FishInfo" method="_on_rename_button_pressed"]
+[connection signal="input_event" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_input_event"]
 [connection signal="mouse_entered" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_entered"]
 [connection signal="mouse_exited" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_exited"]
 [connection signal="text_submitted" from="UI/FishInfo/FishName" to="UI/FishInfo" method="_on_fish_name_text_submitted"]
+[connection signal="pressed" from="UI/FishInfo/RenameButton" to="UI/FishInfo" method="_on_rename_button_pressed"]
 [connection signal="value_changed" from="UI/Settings/MusicSlider" to="UI/Settings" method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="UI/Settings/EffectsSlider" to="UI/Settings" method="_on_effects_slider_value_changed"]
 [connection signal="value_changed" from="UI/Settings/MasterSlider" to="UI/Settings" method="_on_master_slider_value_changed"]
