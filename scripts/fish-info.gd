@@ -122,6 +122,7 @@ func _on_rename_button_pressed():
 
 func _on_fish_name_text_submitted(new_text):
 	$FishName.release_focus()
+	selectedFish.petName = $FishName.text
 
 
 func _on_rename_area_input_event(viewport, event, shape_idx):
@@ -135,3 +136,9 @@ func _on_rename_area_input_event(viewport, event, shape_idx):
 		if i.collider == self or i.collider == $FishName or i.collider == $RenameButton: 
 			$RenameButton.visible = true
 			print("showy")
+
+
+func _on_fish_name_text_changed(new_text):
+	selectedFish.petName = $FishName.text
+
+	

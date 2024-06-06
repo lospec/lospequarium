@@ -697,6 +697,7 @@ bus = &"Effects"
 [connection signal="input_event" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_input_event"]
 [connection signal="mouse_entered" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_entered"]
 [connection signal="mouse_exited" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_exited"]
+[connection signal="text_changed" from="UI/FishInfo/FishName" to="UI/FishInfo" method="_on_fish_name_text_changed"]
 [connection signal="text_submitted" from="UI/FishInfo/FishName" to="UI/FishInfo" method="_on_fish_name_text_submitted"]
 [connection signal="pressed" from="UI/FishInfo/RenameButton" to="UI/FishInfo" method="_on_rename_button_pressed"]
 [connection signal="value_changed" from="UI/Settings/MusicSlider" to="UI/Settings" method="_on_music_slider_value_changed"]
