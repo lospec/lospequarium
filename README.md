@@ -59,7 +59,7 @@ Sprite size should reflect the fishes real world size if based on a real fish:
 8. try to reuse existing assets where possible, but put all new assets in your game folder
 9. use these functions on the controller:
 
-- `.increase_score(Int)` - incrase the score (the coins the player has won and will collect at the end)
+- `.increase_score(Int)` - increase the score (the coins the player has won and will collect at the end)
 - `.end_game()` - end the game, show the player their score (winnings), record high scores, and return to the aquarium
 
 #### Minigame Design Guidelines
