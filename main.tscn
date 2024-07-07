@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=64 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -45,6 +45,10 @@
 [ext_resource type="AudioStream" uid="uid://cuiqctqpaf5ag" path="res://sound/no-no.ogg" id="32_m7gsi"]
 [ext_resource type="Script" path="res://scripts/arcade.gd" id="32_o45qr"]
 [ext_resource type="PackedScene" uid="uid://b7gidt1emyf4e" path="res://scenes/arcade-game.tscn" id="33_5qvca"]
+[ext_resource type="Script" path="res://scripts/sell-fish.gd" id="37_2ktvi"]
+[ext_resource type="Texture2D" uid="uid://mqxsfbtfjij8" path="res://art/ui/indent-gray.png" id="37_sni8o"]
+[ext_resource type="Theme" uid="uid://bjlluavamw0nj" path="res://themes/button_red.tres" id="38_qlrv5"]
+[ext_resource type="Theme" uid="uid://bu6emb1cha5gw" path="res://themes/button-gray.tres" id="39_7n626"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -456,9 +460,9 @@ flip_h = true
 
 [node name="SellButton" type="Button" parent="UI/FishInfo"]
 layout_mode = 0
-offset_left = -87.0
+offset_left = 23.0
 offset_top = 161.0
-offset_right = -23.0
+offset_right = 87.0
 offset_bottom = 199.0
 tooltip_text = "Sell this fish"
 focus_mode = 0
@@ -701,6 +705,99 @@ offset_bottom = 156.0
 theme = ExtResource("31_tuoq2")
 text = "100%"
 
+[node name="SellFishConfirmation" type="NinePatchRect" parent="UI"]
+offset_left = 120.0
+offset_top = 57.0
+offset_right = 368.0
+offset_bottom = 243.0
+texture = ExtResource("29_kf5a7")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("37_2ktvi")
+
+[node name="TitleLabel" type="Label" parent="UI/SellFishConfirmation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.057
+anchor_right = 1.0
+anchor_bottom = 0.196
+offset_top = -0.00600052
+offset_bottom = 0.0319977
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_njjdw")
+text = "Goodbye..."
+horizontal_alignment = 1
+
+[node name="Sadness" type="Label" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 39.0
+offset_right = 224.0
+offset_bottom = 71.0
+theme = ExtResource("31_tuoq2")
+text = "Your fish will have a happy life in a faraway ocean. You will never see your fish again."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Value" type="Label" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 124.0
+offset_right = 224.0
+offset_bottom = 156.0
+theme = ExtResource("31_tuoq2")
+theme_override_colors/font_color = Color(0.87451, 0.796078, 0.74902, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+text = "Value: 9999"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="FishBg" type="NinePatchRect" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 64.0
+offset_right = 176.0
+offset_bottom = 122.0
+mouse_filter = 1
+texture = ExtResource("37_sni8o")
+region_rect = Rect2(0, 0, 10, 10)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="FishTexture" type="Sprite2D" parent="UI/SellFishConfirmation"]
+position = Vector2(125, 93)
+texture = ExtResource("23_hmng7")
+
+[node name="SellButton" type="Button" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 137.0
+offset_right = 193.0
+offset_bottom = 175.0
+tooltip_text = "Sell this fish"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("38_qlrv5")
+text = "SELL"
+
+[node name="KeepButton" type="Button" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 137.0
+offset_right = 125.0
+offset_bottom = 175.0
+tooltip_text = "Keep this fish"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("39_7n626")
+text = "KEEP"
+
 [node name="Xp-bar-full" type="Sprite2D" parent="."]
 position = Vector2(-63, 172)
 texture = ExtResource("18_pwm8v")
@@ -759,7 +856,7 @@ bus = &"Effects"
 [connection signal="gui_input" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
-[connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]
+[connection signal="pressed" from="UI/FishInfo/SellButton" to="UI/SellFishConfirmation" method="show_sell"]
 [connection signal="input_event" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_input_event"]
 [connection signal="mouse_entered" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_entered"]
 [connection signal="mouse_exited" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_exited"]
@@ -769,3 +866,5 @@ bus = &"Effects"
 [connection signal="value_changed" from="UI/Settings/MusicSlider" to="UI/Settings" method="_on_music_slider_value_changed"]
 [connection signal="value_changed" from="UI/Settings/EffectsSlider" to="UI/Settings" method="_on_effects_slider_value_changed"]
 [connection signal="value_changed" from="UI/Settings/MasterSlider" to="UI/Settings" method="_on_master_slider_value_changed"]
+[connection signal="pressed" from="UI/SellFishConfirmation/SellButton" to="UI/SellFishConfirmation" method="_on_press_confirm"]
+[connection signal="pressed" from="UI/SellFishConfirmation/KeepButton" to="UI/SellFishConfirmation" method="_on_press_keep"]

@@ -52,10 +52,7 @@ func revealShop():
 	print("revealed shop")
 
 func updateShop():
-	# Current Item
 	currentItemLabel.text = currentItem.properName
-	
-	
 	get_node("CurrentItemTexture").texture = currentItem.texture
 	
 	buyCurrentItemButton.text = "$" + str(currentItem.cost)
@@ -80,6 +77,9 @@ func updateShop():
 	else: 
 		buyTankUpgradeButton.tooltip_text = "Upgrade max fish in tank to " + str(game.tankSize+1) + " for $" + str(tankSizeCost)
 		buyTankUpgradeButton.disabled = false
+	
+	print("foom in tank: ",roomInTank())
+	print("updated shop")
 
 func hideShop():
 	isOpen = false

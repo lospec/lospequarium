@@ -1,0 +1,72 @@
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://bjlluavamw0nj"]
+
+[ext_resource type="FontFile" uid="uid://dwt5ondobfh4j" path="res://art/fonts/retro-pixel-thick.ttf" id="1_t0ff1"]
+[ext_resource type="Texture2D" uid="uid://d0cbgjlvkg1w7" path="res://art/ui/button-red-hover.png" id="2_o5qk3"]
+[ext_resource type="Texture2D" uid="uid://d1l4xr6pp7lmi" path="res://art/ui/button-red.png" id="3_lqiwn"]
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="4_2e5eh"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_gbnhj"]
+load_path = "res://.godot/imported/button-gray.png-4698536b4c4e95a2e72806e81eb42ec2.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kgle2"]
+texture = SubResource("CompressedTexture2D_gbnhj")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fsmiu"]
+texture = ExtResource("2_o5qk3")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dugfg"]
+texture = ExtResource("3_lqiwn")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 20, 20)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x3w07"]
+texture = ExtResource("2_o5qk3")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_51vka"]
+load_path = "res://.godot/imported/tooltip-bg.png-394053fc204f92c15c1f0b8c263dad80.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v3pbn"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+texture = SubResource("CompressedTexture2D_51vka")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.431373, 0.317647, 0.415686, 1)
+Button/colors/font_hover_color = Color(0.4, 0.176471, 0.223529, 1)
+Button/fonts/font = ExtResource("1_t0ff1")
+Button/styles/disabled = SubResource("StyleBoxTexture_kgle2")
+Button/styles/hover = SubResource("StyleBoxTexture_fsmiu")
+Button/styles/normal = SubResource("StyleBoxTexture_dugfg")
+Button/styles/pressed = SubResource("StyleBoxTexture_x3w07")
+TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/fonts/font = ExtResource("4_2e5eh")
+TooltipPanel/styles/panel = SubResource("StyleBoxTexture_v3pbn")

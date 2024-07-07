@@ -8,7 +8,7 @@ extends NinePatchRect
 @export var selectedFish : Node2D
 
 func _process(delta):
-	if (selectedFish):
+	if selectedFish and is_instance_valid(selectedFish):
 		updateHunger()
 	if (main.DEBUG_MODE):
 		updateDebugText()
