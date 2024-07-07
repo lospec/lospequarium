@@ -16,7 +16,7 @@ func calculateFishValue(fish):
 	if fish.level == 1: return fish.cost
 	var base_price = fish.cost
 	var level = fish.level
-	var increased_value = base_price * pow(1.2, level)
+	var increased_value = base_price * pow(1.1, level)
 	var rounded_cost = ceil(increased_value)
 	return rounded_cost
 

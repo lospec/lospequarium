@@ -38,4 +38,7 @@ func spawn_coin():
 	instance.position.y = -30
 	add_child(instance)
 	
-	next_coin_drop = Time.get_ticks_msec() + randi_range(1000,4000)
+	var max_coin_drop_length = max(1200, 5000 - ((Time.get_ticks_msec()-game_start)/10))
+	print(Time.get_ticks_msec()-game_start, " " , max_coin_drop_length)
+	
+	next_coin_drop = Time.get_ticks_msec() + randi_range(800,max_coin_drop_length)
