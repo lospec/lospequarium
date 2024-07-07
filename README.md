@@ -49,7 +49,7 @@ Sprite size should reflect the fishes real world size if based on a real fish:
 
 ### Adding A minigame
 
-1. create a new folder in the minigames folder with the games name 
+1. create a new folder in the minigames folder with the games name (a-z and dashes)
 2. add a 72x44 `icon.png` to the folder
 3. on `main.tscn`, add a new arcade button to the menu, and set the `game_id` to the folder name, and pretty name to whatever
 4. create a new scene in the folder called `game.tscn`
