@@ -12,6 +12,7 @@ func _ready():
 	$EndScreen.visible = false
 	$EndScreen/NewHighScore.visible = false
 	$Sound/Music.play()
+	visible = true
 	print("started minigame ", gameName)
 
 func increase_score(amount):
