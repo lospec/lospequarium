@@ -1,0 +1,171 @@
+[gd_scene load_steps=16 format=3 uid="uid://djk1a56odxrqp"]
+
+[ext_resource type="Script" path="res://minigames/minigame-controller.gd" id="1_ra521"]
+[ext_resource type="Texture2D" uid="uid://3qttc4rgjmdp" path="res://art/ui/coin.png" id="2_4hx8h"]
+[ext_resource type="Theme" uid="uid://ydbe81qfcfi3" path="res://theme.tres" id="3_7p6vf"]
+[ext_resource type="FontFile" uid="uid://dwt5ondobfh4j" path="res://art/fonts/retro-pixel-thick.ttf" id="4_qbjii"]
+[ext_resource type="Texture2D" uid="uid://2pwycp2x5prx" path="res://art/ui/button-gray-hover.png" id="5_sodxt"]
+[ext_resource type="Texture2D" uid="uid://djogurc3ja4m6" path="res://art/ui/button-gray.png" id="6_fisen"]
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="7_w8yd0"]
+[ext_resource type="StyleBox" uid="uid://ckv51l6e8hle1" path="res://themes/tooltip-bg_style-box.tres" id="8_6v5pa"]
+[ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="9_g0e8g"]
+[ext_resource type="AudioStream" uid="uid://djcperupal2kh" path="res://sound/fishy-games.ogg" id="10_pxrbb"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_t25jg"]
+load_path = "res://.godot/imported/button-gray.png-4698536b4c4e95a2e72806e81eb42ec2.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t0y13"]
+texture = SubResource("CompressedTexture2D_t25jg")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ptyxy"]
+texture = ExtResource("5_sodxt")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qig34"]
+texture = ExtResource("6_fisen")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="Theme" id="Theme_c4evy"]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.431373, 0.317647, 0.415686, 1)
+Button/colors/font_hover_color = Color(0.431373, 0.317647, 0.415686, 1)
+Button/fonts/font = ExtResource("4_qbjii")
+Button/styles/disabled = SubResource("StyleBoxTexture_t0y13")
+Button/styles/hover = SubResource("StyleBoxTexture_ptyxy")
+Button/styles/normal = SubResource("StyleBoxTexture_qig34")
+Button/styles/pressed = SubResource("StyleBoxTexture_t0y13")
+TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/fonts/font = ExtResource("7_w8yd0")
+TooltipPanel/styles/panel = ExtResource("8_6v5pa")
+
+[node name="MinigameController" type="Node2D"]
+z_index = 999
+script = ExtResource("1_ra521")
+
+[node name="CoinSprite" type="Sprite2D" parent="."]
+position = Vector2(13, 13)
+texture = ExtResource("2_4hx8h")
+
+[node name="Score" type="Label" parent="."]
+offset_left = 26.0
+offset_top = 1.0
+offset_right = 74.0
+offset_bottom = 24.0
+theme = ExtResource("3_7p6vf")
+text = "0
+"
+
+[node name="EndScreen" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="EndScreen"]
+offset_left = -6.0
+offset_top = -3.0
+offset_right = 488.0
+offset_bottom = 281.0
+color = Color(0.286275, 0.333333, 0.533333, 1)
+
+[node name="NewHighScore" type="Label" parent="EndScreen"]
+offset_left = -1.0
+offset_top = 123.0
+offset_right = 481.0
+offset_bottom = 146.0
+theme_override_colors/font_color = Color(0.603922, 0.905882, 0.788235, 1)
+theme_override_fonts/font = ExtResource("4_qbjii")
+theme_override_font_sizes/font_size = 16
+text = "New High Score!"
+horizontal_alignment = 1
+
+[node name="Bonus" type="Label" parent="EndScreen/NewHighScore"]
+offset_left = 153.0
+offset_top = 22.0
+offset_right = 211.0
+offset_bottom = 45.0
+theme_override_colors/font_color = Color(0.376471, 0.658824, 0.690196, 1)
+theme_override_fonts/font = ExtResource("4_qbjii")
+theme_override_font_sizes/font_size = 16
+text = "Bonus:"
+horizontal_alignment = 2
+
+[node name="CoinSprite3" type="Sprite2D" parent="EndScreen/NewHighScore"]
+position = Vector2(225, 33)
+texture = ExtResource("2_4hx8h")
+
+[node name="Money" type="Label" parent="EndScreen/NewHighScore"]
+offset_left = 244.0
+offset_top = 22.0
+offset_right = 292.0
+offset_bottom = 45.0
+theme = ExtResource("3_7p6vf")
+text = "0
+"
+
+[node name="CoinSprite2" type="Sprite2D" parent="EndScreen"]
+position = Vector2(224, 99)
+texture = ExtResource("2_4hx8h")
+
+[node name="Money" type="Label" parent="EndScreen"]
+offset_left = 243.0
+offset_top = 88.0
+offset_right = 291.0
+offset_bottom = 111.0
+theme = ExtResource("3_7p6vf")
+text = "0
+"
+
+[node name="YouWon" type="Label" parent="EndScreen"]
+offset_left = 192.0
+offset_top = 53.0
+offset_right = 282.0
+offset_bottom = 76.0
+theme = ExtResource("3_7p6vf")
+text = "You won:"
+
+[node name="BackToTankButton" type="Button" parent="EndScreen"]
+offset_left = 160.0
+offset_top = 199.0
+offset_right = 315.0
+offset_bottom = 237.0
+tooltip_text = "Take your winnings and return to your fish tank"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_c4evy")
+text = "Back to Tank"
+
+[node name="HighScore" type="Label" parent="EndScreen"]
+offset_top = 5.0
+offset_right = 475.0
+offset_bottom = 28.0
+theme_override_colors/font_color = Color(0.376471, 0.658824, 0.690196, 1)
+theme_override_fonts/font = ExtResource("4_qbjii")
+theme_override_font_sizes/font_size = 16
+text = "High Score: 9999"
+horizontal_alignment = 2
+
+[node name="Sound" type="Node" parent="."]
+
+[node name="Collect" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("9_g0e8g")
+bus = &"Effects"
+
+[node name="Music" type="AudioStreamPlayer" parent="Sound"]
+stream = ExtResource("10_pxrbb")
+volume_db = -5.547
+bus = &"Music"
+
+[connection signal="pressed" from="EndScreen/BackToTankButton" to="." method="_on_back_to_tank_button_pressed"]

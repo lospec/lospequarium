@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=60 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" path="res://shop.gd" id="10_0uksf"]
 [ext_resource type="Texture2D" uid="uid://fyqg4kows5t1" path="res://art/ui/settings.png" id="11_0pq2d"]
 [ext_resource type="Theme" uid="uid://dslw584p0c8fd" path="res://themes/shop-buttons.tres" id="12_gm4d3"]
+[ext_resource type="Texture2D" uid="uid://baexg088c7qhk" path="res://art/ui/arcade.png" id="12_pcbjt"]
 [ext_resource type="Texture2D" uid="uid://bxfa5xs6r1dyj" path="res://art/ui/shop-indent.png" id="13_h8d08"]
 [ext_resource type="Texture2D" uid="uid://bw045gyko1l3n" path="res://art/ui/dialog-blue.png" id="14_fl8mk"]
 [ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="15_fg7uf"]
@@ -37,10 +38,13 @@
 [ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
 [ext_resource type="Texture2D" uid="uid://ccake8shysjxy" path="res://art/ui/rename.png" id="30_eiogn"]
 [ext_resource type="Script" path="res://scripts/settings.gd" id="30_x0fdv"]
+[ext_resource type="Texture2D" uid="uid://benut7hsa3l1o" path="res://art/ui/dialog-green.png" id="31_2xohe"]
 [ext_resource type="AudioStream" uid="uid://utyqqfrmq05g" path="res://sound/open-menu.wav" id="31_dr106"]
 [ext_resource type="Theme" uid="uid://c6kye7f6w1nnt" path="res://themes/small-text.tres" id="31_tuoq2"]
 [ext_resource type="AudioStream" uid="uid://cwegjadoqdglc" path="res://sound/close-menu.wav" id="32_eqthy"]
 [ext_resource type="AudioStream" uid="uid://cuiqctqpaf5ag" path="res://sound/no-no.ogg" id="32_m7gsi"]
+[ext_resource type="Script" path="res://scripts/arcade.gd" id="32_o45qr"]
+[ext_resource type="PackedScene" uid="uid://b7gidt1emyf4e" path="res://scenes/arcade-game.tscn" id="33_5qvca"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -192,6 +196,16 @@ tooltip_text = "Settings"
 mouse_default_cursor_shape = 2
 theme = ExtResource("8_pmiyt")
 texture_normal = ExtResource("11_0pq2d")
+
+[node name="ArcadeButton" type="TextureButton" parent="UI"]
+offset_left = 41.0
+offset_top = 3.0
+offset_right = 68.0
+offset_bottom = 35.0
+tooltip_text = "Arcade"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("12_pcbjt")
 
 [node name="Shop" type="NinePatchRect" parent="UI"]
 offset_left = 480.0
@@ -516,6 +530,57 @@ mouse_default_cursor_shape = 2
 theme = ExtResource("8_pmiyt")
 texture_normal = ExtResource("30_eiogn")
 
+[node name="Arcade" type="NinePatchRect" parent="UI"]
+offset_left = 57.0
+offset_top = -211.0
+offset_right = 432.0
+offset_bottom = -4.0
+texture = ExtResource("31_2xohe")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("32_o45qr")
+
+[node name="TitleLabel" type="Label" parent="UI/Arcade"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -92.5
+offset_bottom = -70.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_njjdw")
+text = "Arcade
+"
+horizontal_alignment = 1
+
+[node name="ArcadeGame" parent="UI/Arcade" instance=ExtResource("33_5qvca")]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 75.0
+offset_right = 228.0
+offset_bottom = 149.0
+tooltip_text = ""
+pretty_title = "Sharkbait"
+game_id = "sharkbait"
+
+[node name="Label" type="Label" parent="UI/Arcade"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 375.0
+offset_bottom = 56.0
+theme_override_colors/font_shadow_color = Color(0.290196, 0.478431, 0.278431, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("15_fg7uf")
+theme_override_font_sizes/font_size = 8
+text = "Play games to win coins!"
+horizontal_alignment = 1
+
 [node name="Settings" type="NinePatchRect" parent="UI"]
 offset_left = 57.0
 offset_top = 274.0
@@ -688,6 +753,7 @@ bus = &"Effects"
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
 [connection signal="pressed" from="UI/SettingsButton" to="UI/Settings" method="toggleSettings"]
+[connection signal="pressed" from="UI/ArcadeButton" to="UI/Arcade" method="toggleArcade"]
 [connection signal="gui_input" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
 [connection signal="gui_input" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_gui_input"]

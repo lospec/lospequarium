@@ -1,0 +1,122 @@
+[gd_scene load_steps=17 format=3 uid="uid://b7gidt1emyf4e"]
+
+[ext_resource type="FontFile" uid="uid://dwt5ondobfh4j" path="res://art/fonts/retro-pixel-thick.ttf" id="1_m3np3"]
+[ext_resource type="Texture2D" uid="uid://b2ehgqvmbvnpp" path="res://art/ui/button-green.png" id="2_kqi74"]
+[ext_resource type="Texture2D" uid="uid://2pwycp2x5prx" path="res://art/ui/button-gray-hover.png" id="3_6w77b"]
+[ext_resource type="Texture2D" uid="uid://djogurc3ja4m6" path="res://art/ui/button-gray.png" id="4_f82q2"]
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="5_el2jr"]
+[ext_resource type="Script" path="res://scripts/arcade-buttons.gd" id="6_nw7k7"]
+[ext_resource type="Theme" uid="uid://c6kye7f6w1nnt" path="res://themes/small-text.tres" id="7_brxok"]
+[ext_resource type="Texture2D" uid="uid://cp1wrm0mhjrxx" path="res://art/ui/arcade-button-missing-game.png" id="8_m8br0"]
+[ext_resource type="Texture2D" uid="uid://3frik03pynrt" path="res://art/ui/arcade-button-frame.png" id="9_06fso"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ep6xx"]
+texture = ExtResource("2_kqi74")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fsmrr"]
+texture = ExtResource("3_6w77b")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_1eyit"]
+texture = ExtResource("4_f82q2")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+region_rect = Rect2(0, 0, 20, 20)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_aadb2"]
+texture = ExtResource("3_6w77b")
+texture_margin_left = 9.0
+texture_margin_top = 9.0
+texture_margin_right = 9.0
+texture_margin_bottom = 9.0
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_u7la6"]
+load_path = "res://.godot/imported/tooltip-bg.png-394053fc204f92c15c1f0b8c263dad80.ctex"
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iiyi1"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+texture = SubResource("CompressedTexture2D_u7la6")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 2.0
+
+[sub_resource type="Theme" id="Theme_05dmo"]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.431373, 0.317647, 0.415686, 1)
+Button/colors/font_hover_color = Color(0.290196, 0.478431, 0.278431, 1)
+Button/fonts/font = ExtResource("1_m3np3")
+Button/styles/disabled = SubResource("StyleBoxTexture_ep6xx")
+Button/styles/hover = SubResource("StyleBoxTexture_fsmrr")
+Button/styles/normal = SubResource("StyleBoxTexture_1eyit")
+Button/styles/pressed = SubResource("StyleBoxTexture_aadb2")
+TooltipLabel/font_sizes/font_size = 8
+TooltipLabel/fonts/font = ExtResource("5_el2jr")
+TooltipPanel/styles/panel = SubResource("StyleBoxTexture_iiyi1")
+
+[node name="ArcadeGame" type="Button"]
+offset_right = 86.0
+offset_bottom = 74.0
+tooltip_text = "Play Sharkbait!"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = SubResource("Theme_05dmo")
+script = ExtResource("6_nw7k7")
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 4.0
+offset_right = 80.0
+offset_bottom = 15.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_brxok")
+text = "!MISSING TITLE"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighScore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 60.0
+offset_right = 81.0
+offset_bottom = 70.0
+mouse_filter = 1
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_brxok")
+theme_override_colors/font_color = Color(0.87451, 0.796078, 0.74902, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+text = "High Score: 9999"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameIcon" type="Sprite2D" parent="."]
+position = Vector2(43, 37)
+texture = ExtResource("8_m8br0")
+
+[node name="Frame" type="Sprite2D" parent="."]
+position = Vector2(43, 37)
+texture = ExtResource("9_06fso")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

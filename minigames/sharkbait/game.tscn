@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://5f70l3j71r20"]
+
+[ext_resource type="Script" path="res://minigames/sharkbait/sharkbait.gd" id="1_tj46u"]
+[ext_resource type="Script" path="res://minigames/sharkbait/player.gd" id="2_dm8e7"]
+[ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="3_foehg"]
+[ext_resource type="PackedScene" uid="uid://djk1a56odxrqp" path="res://minigames/minigame_controller.tscn" id="5_3f7c1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iftkv"]
+radius = 7.0
+height = 24.0
+
+[node name="sharkbait" type="Node2D"]
+script = ExtResource("1_tj46u")
+
+[node name="bg" type="ColorRect" parent="."]
+offset_right = 483.0
+offset_bottom = 273.0
+color = Color(0.376471, 0.658824, 0.690196, 1)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(53, 131)
+script = ExtResource("2_dm8e7")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(-2, 0)
+texture = ExtResource("3_foehg")
+flip_h = true
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_iftkv")
+
+[node name="MinigameController" parent="." instance=ExtResource("5_3f7c1")]
+
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]

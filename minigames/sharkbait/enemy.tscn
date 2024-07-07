@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://ct82pn3cu6wxc"]
+
+[ext_resource type="Script" path="res://minigames/sharkbait/enemy.gd" id="1_412em"]
+[ext_resource type="Texture2D" uid="uid://ds41xihue71bm" path="res://art/fish/great-white-shark.png" id="2_r80tq"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_w4fsw"]
+points = PackedVector2Array(-11.035, -7.945, 20.72, -3.635, 20.89, 1.635, -11.365, 8.64, -23.85, 1.76, -23.895, -0.82)
+
+[node name="Enemy" type="CharacterBody2D"]
+position = Vector2(440, 137)
+script = ExtResource("1_412em")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_r80tq")
+
+[node name="Area2D" type="Area2D" parent="." groups=["enemy"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["enemy"]]
+shape = SubResource("ConvexPolygonShape2D_w4fsw")
