@@ -22,6 +22,7 @@ func showArcade():
 	var tween = create_tween()
 	tween.tween_property(self, "position", Vector2(position.x,OPEN_POSITION), TWEEN_SPEED).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	get_node("/root/Node2D/Sound/MenuOpen").play()
+	get_node("/root/Node2D/UI/Settings").hideSettings()
 	
 func hideArcade():
 	open = false
