@@ -1,0 +1,11 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://c6kye7f6w1nnt"]
+
+[ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="1_2tdri"]
+
+[resource]
+Label/colors/font_shadow_color = Color(0.431373, 0.317647, 0.415686, 1)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+Label/constants/shadow_outline_size = 0
+Label/font_sizes/font_size = 8
+Label/fonts/font = ExtResource("1_2tdri")

@@ -41,6 +41,19 @@ func addFish(spawnedFish):
 	fish.append(newFishData)
 	saveGame()
 	
+func remove_fish(fishNode):
+	var fish_data = fish.filter(func(f): return f.id == fishNode.id)
+	if fish_data.size() == 0: 
+		push_error("tried to remove fish, but couldn't find the in the fish array", fishNode)
+		pass
+	print("okay im ghonna remove this fish with his data:", fish_data[0])
+	var fish_index = fish.find(fish_data[0])
+	print("removing fish at ",fish_index)
+	fish.remove_at(fish_index)
+	fishNode.queue_free()
+	saveGame()
+	
+	
 func spawnFish(fishData):
 	var fishScene = load("res://fish/"+fishData.type+".tscn")
 	var newFish = fishScene.instantiate()
@@ -51,6 +64,7 @@ func spawnFish(fishData):
 	if (fishData.birth): newFish.birth = fishData.birth
 	if (fishData.xp): newFish.xp = fishData.xp
 	if (fishData.level): newFish.level = fishData.level
+	if (fishData.has("petName")): newFish.petName = fishData.petName
 	
 	# postion in tank
 	newFish.position.x = rng.randi_range(20, 380)
@@ -97,9 +111,7 @@ func updateFishData(fishy):
 			fishy.level = f.level
 			fishy.xp = f.xp
 			fishy.birth = f.birth
+			fishy.petName = f.petName
 			return
 	print("failed to find matching fish when saving fish data. id:",fishy.id)
 
-
-func _on_sell_button_pressed():
-	print("sell fish")

@@ -1,0 +1,86 @@
+[gd_scene load_steps=11 format=3 uid="uid://5f70l3j71r20"]
+
+[ext_resource type="Script" path="res://minigames/sharkbait/sharkbait.gd" id="1_tj46u"]
+[ext_resource type="Script" path="res://minigames/sharkbait/player.gd" id="2_dm8e7"]
+[ext_resource type="Texture2D" uid="uid://cnjrgmhvvjiih" path="res://art/fish/carp.png" id="3_foehg"]
+[ext_resource type="PackedScene" uid="uid://djk1a56odxrqp" path="res://minigames/minigame_controller.tscn" id="5_3f7c1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_iftkv"]
+radius = 7.0
+height = 24.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_54jsm"]
+radius = 7.0
+height = 24.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f4qqj"]
+normal = Vector2(0, 1)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fiawp"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fcd3s"]
+normal = Vector2(1, 0)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_fk1ei"]
+normal = Vector2(-1, 0)
+
+[node name="sharkbait" type="Node2D"]
+script = ExtResource("1_tj46u")
+
+[node name="bg" type="ColorRect" parent="."]
+offset_right = 483.0
+offset_bottom = 273.0
+color = Color(0.376471, 0.658824, 0.690196, 1)
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(53, 131)
+script = ExtResource("2_dm8e7")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(-2, 0)
+texture = ExtResource("3_foehg")
+flip_h = true
+
+[node name="Area2D" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_iftkv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_54jsm")
+
+[node name="MinigameController" parent="." instance=ExtResource("5_3f7c1")]
+visible = false
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="WallTop" type="RigidBody2D" parent="Node2D"]
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/WallTop"]
+shape = SubResource("WorldBoundaryShape2D_f4qqj")
+
+[node name="WallBottom" type="RigidBody2D" parent="Node2D"]
+position = Vector2(0, 270)
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/WallBottom"]
+shape = SubResource("WorldBoundaryShape2D_fiawp")
+
+[node name="WallLeft" type="RigidBody2D" parent="Node2D"]
+position = Vector2(0, 156)
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/WallLeft"]
+shape = SubResource("WorldBoundaryShape2D_fcd3s")
+
+[node name="WallRight" type="RigidBody2D" parent="Node2D"]
+position = Vector2(480, 156)
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/WallRight"]
+shape = SubResource("WorldBoundaryShape2D_fk1ei")
+
+[connection signal="area_entered" from="Player/Area2D" to="Player" method="_on_area_2d_area_entered"]

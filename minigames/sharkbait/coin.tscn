@@ -1,0 +1,77 @@
+[gd_scene load_steps=13 format=3 uid="uid://cxlmv6gut7pnx"]
+
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="1_57e3y"]
+[ext_resource type="Script" path="res://minigames/sharkbait/coin.gd" id="1_n5vsa"]
+[ext_resource type="Texture2D" uid="uid://b2ej78p3u1sxr" path="res://art/ui/coin-drop.png" id="2_tox23"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jxgn2"]
+shader = ExtResource("1_57e3y")
+shader_parameter/line_color = Color(1, 1, 1, 1)
+shader_parameter/enabled = false
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxy5n"]
+atlas = ExtResource("2_tox23")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iv18m"]
+atlas = ExtResource("2_tox23")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kktqj"]
+atlas = ExtResource("2_tox23")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5i2d"]
+atlas = ExtResource("2_tox23")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hvdb"]
+atlas = ExtResource("2_tox23")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yswj"]
+atlas = ExtResource("2_tox23")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6iv0a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fxy5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iv18m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kktqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5i2d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hvdb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yswj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3d50d"]
+radius = 8.0
+
+[node name="Coin" type="CharacterBody2D"]
+script = ExtResource("1_n5vsa")
+
+[node name="Sprite2d" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_jxgn2")
+sprite_frames = SubResource("SpriteFrames_6iv0a")
+autoplay = "default"
+
+[node name="Area2D" type="Area2D" parent="." groups=["coin"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" groups=["coin"]]
+position = Vector2(1, 0)
+shape = SubResource("CircleShape2D_3d50d")

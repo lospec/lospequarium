@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://c175jf4ds1chx"]
+[gd_scene load_steps=64 format=3 uid="uid://c175jf4ds1chx"]
 
 [ext_resource type="Script" path="res://tank.gd" id="1_q2ff1"]
 [ext_resource type="Script" path="res://main.gd" id="1_rauu0"]
@@ -12,7 +12,9 @@
 [ext_resource type="Theme" uid="uid://d14ayvl6gndqm" path="res://themes/tooltip_theme.tres" id="8_pmiyt"]
 [ext_resource type="Texture2D" uid="uid://b40m7gocdcrke" path="res://art/ui/shop.png" id="9_qmnaw"]
 [ext_resource type="Script" path="res://shop.gd" id="10_0uksf"]
+[ext_resource type="Texture2D" uid="uid://fyqg4kows5t1" path="res://art/ui/settings.png" id="11_0pq2d"]
 [ext_resource type="Theme" uid="uid://dslw584p0c8fd" path="res://themes/shop-buttons.tres" id="12_gm4d3"]
+[ext_resource type="Texture2D" uid="uid://baexg088c7qhk" path="res://art/ui/arcade.png" id="12_pcbjt"]
 [ext_resource type="Texture2D" uid="uid://bxfa5xs6r1dyj" path="res://art/ui/shop-indent.png" id="13_h8d08"]
 [ext_resource type="Texture2D" uid="uid://bw045gyko1l3n" path="res://art/ui/dialog-blue.png" id="14_fl8mk"]
 [ext_resource type="FontFile" uid="uid://d4k08oh6csnbf" path="res://art/fonts/04B03.ttf" id="15_fg7uf"]
@@ -32,10 +34,21 @@
 [ext_resource type="AudioStream" uid="uid://tnk737dot0pt" path="res://sound/fish-bloop.wav" id="27_l78wf"]
 [ext_resource type="AudioStream" uid="uid://bih48in13e4uj" path="res://sound/kaching.ogg" id="27_ml0hy"]
 [ext_resource type="AudioStream" uid="uid://vona4tol1f0r" path="res://sound/coin-collect.wav" id="28_5jqr6"]
+[ext_resource type="Texture2D" uid="uid://cou3c03j8ign5" path="res://art/ui/dialog-grey.png" id="29_kf5a7"]
 [ext_resource type="AudioStream" uid="uid://y2wvcikahqgp" path="res://sound/fish-eat.ogg" id="30_e2xhv"]
+[ext_resource type="Texture2D" uid="uid://ccake8shysjxy" path="res://art/ui/rename.png" id="30_eiogn"]
+[ext_resource type="Script" path="res://scripts/settings.gd" id="30_x0fdv"]
+[ext_resource type="Texture2D" uid="uid://benut7hsa3l1o" path="res://art/ui/dialog-green.png" id="31_2xohe"]
 [ext_resource type="AudioStream" uid="uid://utyqqfrmq05g" path="res://sound/open-menu.wav" id="31_dr106"]
+[ext_resource type="Theme" uid="uid://c6kye7f6w1nnt" path="res://themes/small-text.tres" id="31_tuoq2"]
 [ext_resource type="AudioStream" uid="uid://cwegjadoqdglc" path="res://sound/close-menu.wav" id="32_eqthy"]
 [ext_resource type="AudioStream" uid="uid://cuiqctqpaf5ag" path="res://sound/no-no.ogg" id="32_m7gsi"]
+[ext_resource type="Script" path="res://scripts/arcade.gd" id="32_o45qr"]
+[ext_resource type="PackedScene" uid="uid://b7gidt1emyf4e" path="res://scenes/arcade-game.tscn" id="33_5qvca"]
+[ext_resource type="Script" path="res://scripts/sell-fish.gd" id="37_2ktvi"]
+[ext_resource type="Texture2D" uid="uid://mqxsfbtfjij8" path="res://art/ui/indent-gray.png" id="37_sni8o"]
+[ext_resource type="Theme" uid="uid://bjlluavamw0nj" path="res://themes/button_red.tres" id="38_qlrv5"]
+[ext_resource type="Theme" uid="uid://bu6emb1cha5gw" path="res://themes/button-gray.tres" id="39_7n626"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_gsbav"]
 normal = Vector2(1, 0)
@@ -51,6 +64,10 @@ distance = 0.5
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_qlkg4"]
 distance = -269.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skyyh"]
+shader = ExtResource("3_053vm")
+shader_parameter/speed = 0.1
 
 [sub_resource type="Theme" id="Theme_5vd60"]
 Label/colors/font_color = Color(0.815686, 0.254902, 0.32549, 1)
@@ -81,9 +98,14 @@ Label/constants/shadow_outline_size = 0
 Label/font_sizes/font_size = 13
 Label/fonts/font = ExtResource("16_txocg")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_skyyh"]
-shader = ExtResource("3_053vm")
-shader_parameter/speed = 0.1
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4ss04"]
+size = Vector2(96, 57)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ihl1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gf4ul"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_akpou"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rauu0")
@@ -118,6 +140,24 @@ shape = SubResource("WorldBoundaryShape2D_qlkg4")
 texture = ExtResource("1_ur807")
 centered = false
 
+[node name="Waves" type="Sprite2D" parent="Tank"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(97, 39)
+texture = ExtResource("4_u6gtm")
+
+[node name="Waves2" type="Sprite2D" parent="Tank"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(315, 39)
+texture = ExtResource("4_u6gtm")
+
+[node name="Waves3" type="Sprite2D" parent="Tank"]
+texture_repeat = 2
+material = SubResource("ShaderMaterial_skyyh")
+position = Vector2(533, 39)
+texture = ExtResource("4_u6gtm")
+
 [node name="Food" type="Node2D" parent="."]
 
 [node name="Fish" parent="." instance=ExtResource("2_am8qu")]
@@ -150,6 +190,26 @@ tooltip_text = "Open Shop"
 mouse_default_cursor_shape = 2
 theme = ExtResource("8_pmiyt")
 texture_normal = ExtResource("9_qmnaw")
+
+[node name="SettingsButton" type="TextureButton" parent="UI"]
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 33.0
+offset_bottom = 32.0
+tooltip_text = "Settings"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("11_0pq2d")
+
+[node name="ArcadeButton" type="TextureButton" parent="UI"]
+offset_left = 41.0
+offset_top = 3.0
+offset_right = 68.0
+offset_bottom = 35.0
+tooltip_text = "Arcade"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("12_pcbjt")
 
 [node name="Shop" type="NinePatchRect" parent="UI"]
 offset_left = 480.0
@@ -266,16 +326,6 @@ patch_margin_left = 4
 patch_margin_top = 4
 patch_margin_right = 4
 patch_margin_bottom = 4
-
-[node name="FishName" type="Label" parent="UI/FishInfo"]
-layout_mode = 0
-offset_left = 20.0
-offset_top = 11.0
-offset_right = 90.0
-offset_bottom = 19.0
-theme = SubResource("Theme_320sv")
-text = "FISH NAME"
-horizontal_alignment = 1
 
 [node name="FishSpecies" type="Label" parent="UI/FishInfo"]
 layout_mode = 0
@@ -410,9 +460,9 @@ flip_h = true
 
 [node name="SellButton" type="Button" parent="UI/FishInfo"]
 layout_mode = 0
-offset_left = -87.0
+offset_left = 23.0
 offset_top = 161.0
-offset_right = -23.0
+offset_right = 87.0
 offset_bottom = 199.0
 tooltip_text = "Sell this fish"
 focus_mode = 0
@@ -439,6 +489,315 @@ theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("15_fg7uf")
 theme_override_font_sizes/font_size = 8
 
+[node name="RenameArea" type="Area2D" parent="UI/FishInfo"]
+z_index = 20
+position = Vector2(78, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/FishInfo/RenameArea"]
+position = Vector2(-31, 22.5)
+shape = SubResource("RectangleShape2D_4ss04")
+
+[node name="FishName" type="LineEdit" parent="UI/FishInfo"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 11.0
+offset_right = 87.0
+offset_bottom = 19.0
+tooltip_text = "Fish Name"
+mouse_filter = 1
+theme = ExtResource("8_pmiyt")
+theme_override_colors/font_color = Color(0.286275, 0.333333, 0.533333, 1)
+theme_override_fonts/font = ExtResource("15_fg7uf")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1ihl1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gf4ul")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_akpou")
+text = "FISH NAME"
+alignment = 1
+max_length = 10
+context_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+selecting_enabled = false
+caret_blink = true
+caret_blink_interval = 0.2
+
+[node name="RenameButton" type="TextureButton" parent="UI/FishInfo"]
+visible = false
+layout_mode = 0
+offset_left = 78.0
+offset_top = 10.0
+offset_right = 87.0
+offset_bottom = 19.0
+tooltip_text = "Rename Fish"
+mouse_default_cursor_shape = 2
+theme = ExtResource("8_pmiyt")
+texture_normal = ExtResource("30_eiogn")
+
+[node name="Arcade" type="NinePatchRect" parent="UI"]
+offset_left = 57.0
+offset_top = -211.0
+offset_right = 432.0
+offset_bottom = -4.0
+texture = ExtResource("31_2xohe")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("32_o45qr")
+
+[node name="TitleLabel" type="Label" parent="UI/Arcade"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -92.5
+offset_bottom = -70.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_njjdw")
+text = "Arcade
+"
+horizontal_alignment = 1
+
+[node name="ArcadeGame" parent="UI/Arcade" instance=ExtResource("33_5qvca")]
+layout_mode = 0
+offset_left = 142.0
+offset_top = 75.0
+offset_right = 228.0
+offset_bottom = 149.0
+tooltip_text = ""
+pretty_title = "Sharkbait"
+game_id = "sharkbait"
+
+[node name="Label" type="Label" parent="UI/Arcade"]
+layout_mode = 0
+offset_top = 33.0
+offset_right = 375.0
+offset_bottom = 56.0
+theme_override_colors/font_shadow_color = Color(0.290196, 0.478431, 0.278431, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/shadow_outline_size = 0
+theme_override_fonts/font = ExtResource("15_fg7uf")
+theme_override_font_sizes/font_size = 8
+text = "Play games to win coins!"
+horizontal_alignment = 1
+
+[node name="Settings" type="NinePatchRect" parent="UI"]
+offset_left = 57.0
+offset_top = 274.0
+offset_right = 432.0
+offset_bottom = 481.0
+texture = ExtResource("29_kf5a7")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("30_x0fdv")
+
+[node name="TitleLabel" type="Label" parent="UI/Settings"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -92.5
+offset_bottom = -70.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_njjdw")
+text = "Settings"
+horizontal_alignment = 1
+
+[node name="Volume" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 84.0
+offset_right = 55.0
+offset_bottom = 92.0
+theme = ExtResource("31_tuoq2")
+text = "Music"
+horizontal_alignment = 2
+
+[node name="MusicLabel" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 63.0
+offset_right = 365.0
+offset_bottom = 71.0
+theme = ExtResource("31_tuoq2")
+text = "Volume:"
+horizontal_alignment = 1
+
+[node name="MusicSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 78.0
+offset_right = 335.0
+offset_bottom = 98.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_njjdw")
+
+[node name="MusicPercent" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 84.0
+offset_right = 367.0
+offset_bottom = 92.0
+theme = ExtResource("31_tuoq2")
+text = "100%"
+
+[node name="EffectsLabel" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 115.0
+offset_right = 55.0
+offset_bottom = 123.0
+theme = ExtResource("31_tuoq2")
+text = "Effects"
+horizontal_alignment = 2
+
+[node name="EffectsSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 109.0
+offset_right = 335.0
+offset_bottom = 129.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_njjdw")
+
+[node name="EffectsPercent" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 115.0
+offset_right = 367.0
+offset_bottom = 123.0
+theme = ExtResource("31_tuoq2")
+text = "100%"
+
+[node name="MasterLabel" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 148.0
+offset_right = 55.0
+offset_bottom = 156.0
+theme = ExtResource("31_tuoq2")
+text = "Master"
+horizontal_alignment = 2
+
+[node name="MasterSlider" type="HSlider" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 142.0
+offset_right = 335.0
+offset_bottom = 162.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("7_njjdw")
+
+[node name="MasterPercent" type="Label" parent="UI/Settings"]
+layout_mode = 0
+offset_left = 341.0
+offset_top = 148.0
+offset_right = 367.0
+offset_bottom = 156.0
+theme = ExtResource("31_tuoq2")
+text = "100%"
+
+[node name="SellFishConfirmation" type="NinePatchRect" parent="UI"]
+offset_left = 120.0
+offset_top = 57.0
+offset_right = 368.0
+offset_bottom = 243.0
+texture = ExtResource("29_kf5a7")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+script = ExtResource("37_2ktvi")
+
+[node name="TitleLabel" type="Label" parent="UI/SellFishConfirmation"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.057
+anchor_right = 1.0
+anchor_bottom = 0.196
+offset_top = -0.00600052
+offset_bottom = 0.0319977
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_njjdw")
+text = "Goodbye..."
+horizontal_alignment = 1
+
+[node name="Sadness" type="Label" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 39.0
+offset_right = 224.0
+offset_bottom = 71.0
+theme = ExtResource("31_tuoq2")
+text = "Your fish will have a happy life in a faraway ocean. You will never see your fish again."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Value" type="Label" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 124.0
+offset_right = 224.0
+offset_bottom = 156.0
+theme = ExtResource("31_tuoq2")
+theme_override_colors/font_color = Color(0.87451, 0.796078, 0.74902, 1)
+theme_override_constants/shadow_offset_x = 0
+theme_override_constants/shadow_offset_y = 0
+text = "Value: 9999"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="FishBg" type="NinePatchRect" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 64.0
+offset_right = 176.0
+offset_bottom = 122.0
+mouse_filter = 1
+texture = ExtResource("37_sni8o")
+region_rect = Rect2(0, 0, 10, 10)
+patch_margin_left = 4
+patch_margin_top = 4
+patch_margin_right = 4
+patch_margin_bottom = 4
+
+[node name="FishTexture" type="Sprite2D" parent="UI/SellFishConfirmation"]
+position = Vector2(125, 93)
+texture = ExtResource("23_hmng7")
+
+[node name="SellButton" type="Button" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 129.0
+offset_top = 137.0
+offset_right = 193.0
+offset_bottom = 175.0
+tooltip_text = "Sell this fish"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("38_qlrv5")
+text = "SELL"
+
+[node name="KeepButton" type="Button" parent="UI/SellFishConfirmation"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 137.0
+offset_right = 125.0
+offset_bottom = 175.0
+tooltip_text = "Keep this fish"
+focus_mode = 0
+mouse_default_cursor_shape = 2
+theme = ExtResource("39_7n626")
+text = "KEEP"
+
 [node name="Xp-bar-full" type="Sprite2D" parent="."]
 position = Vector2(-63, 172)
 texture = ExtResource("18_pwm8v")
@@ -448,60 +807,64 @@ texture = ExtResource("18_pwm8v")
 [node name="LevelUp" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("26_ksoml")
 volume_db = -9.75
+bus = &"Effects"
 
 [node name="BoughtItem" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("27_ml0hy")
 volume_db = -9.75
+bus = &"Effects"
 
 [node name="Music" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("26_7swpp")
 autoplay = true
+bus = &"Music"
 
 [node name="Bloop" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("27_l78wf")
+bus = &"Effects"
 
 [node name="Coin" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("28_5jqr6")
 volume_db = -5.056
+bus = &"Effects"
 
 [node name="Eat" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("30_e2xhv")
 volume_db = -10.111
+bus = &"Effects"
 
 [node name="MenuOpen" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("31_dr106")
 volume_db = -5.0
+bus = &"Effects"
 
 [node name="CantBuy" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_m7gsi")
 volume_db = -20.528
+bus = &"Effects"
 
 [node name="MenuClose" type="AudioStreamPlayer" parent="Sound"]
 stream = ExtResource("32_eqthy")
 volume_db = -5.0
-
-[node name="Waves" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_skyyh")
-position = Vector2(97, 39)
-texture = ExtResource("4_u6gtm")
-
-[node name="Waves2" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_skyyh")
-position = Vector2(315, 39)
-texture = ExtResource("4_u6gtm")
-
-[node name="Waves3" type="Sprite2D" parent="."]
-texture_repeat = 2
-material = SubResource("ShaderMaterial_skyyh")
-position = Vector2(533, 39)
-texture = ExtResource("4_u6gtm")
+bus = &"Effects"
 
 [connection signal="pressed" from="UI/ShopButton" to="UI/Shop" method="_on_shop_button_pressed"]
+[connection signal="pressed" from="UI/SettingsButton" to="UI/Settings" method="toggleSettings"]
+[connection signal="pressed" from="UI/ArcadeButton" to="UI/Arcade" method="toggleArcade"]
 [connection signal="gui_input" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/BuyCurrentItemButton" to="UI/Shop" method="_on_buy_current_item_button_pressed"]
 [connection signal="gui_input" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_gui_input"]
 [connection signal="pressed" from="UI/Shop/UpgradeTankButton" to="UI/Shop" method="_on_upgrade_tank_button_pressed"]
 [connection signal="pressed" from="UI/FishInfo/CloseButton" to="UI/FishInfo" method="_on_texture_button_pressed"]
-[connection signal="pressed" from="UI/FishInfo/SellButton" to="." method="_on_sell_button_pressed"]
+[connection signal="pressed" from="UI/FishInfo/SellButton" to="UI/SellFishConfirmation" method="show_sell"]
+[connection signal="input_event" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_input_event"]
+[connection signal="mouse_entered" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_entered"]
+[connection signal="mouse_exited" from="UI/FishInfo/RenameArea" to="UI/FishInfo" method="_on_rename_area_mouse_exited"]
+[connection signal="text_changed" from="UI/FishInfo/FishName" to="UI/FishInfo" method="_on_fish_name_text_changed"]
+[connection signal="text_submitted" from="UI/FishInfo/FishName" to="UI/FishInfo" method="_on_fish_name_text_submitted"]
+[connection signal="pressed" from="UI/FishInfo/RenameButton" to="UI/FishInfo" method="_on_rename_button_pressed"]
+[connection signal="value_changed" from="UI/Settings/MusicSlider" to="UI/Settings" method="_on_music_slider_value_changed"]
+[connection signal="value_changed" from="UI/Settings/EffectsSlider" to="UI/Settings" method="_on_effects_slider_value_changed"]
+[connection signal="value_changed" from="UI/Settings/MasterSlider" to="UI/Settings" method="_on_master_slider_value_changed"]
+[connection signal="pressed" from="UI/SellFishConfirmation/SellButton" to="UI/SellFishConfirmation" method="_on_press_confirm"]
+[connection signal="pressed" from="UI/SellFishConfirmation/KeepButton" to="UI/SellFishConfirmation" method="_on_press_keep"]

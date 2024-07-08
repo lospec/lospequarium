@@ -52,10 +52,7 @@ func revealShop():
 	print("revealed shop")
 
 func updateShop():
-	# Current Item
 	currentItemLabel.text = currentItem.properName
-	
-	
 	get_node("CurrentItemTexture").texture = currentItem.texture
 	
 	buyCurrentItemButton.text = "$" + str(currentItem.cost)
@@ -80,6 +77,9 @@ func updateShop():
 	else: 
 		buyTankUpgradeButton.tooltip_text = "Upgrade max fish in tank to " + str(game.tankSize+1) + " for $" + str(tankSizeCost)
 		buyTankUpgradeButton.disabled = false
+	
+	print("foom in tank: ",roomInTank())
+	print("updated shop")
 
 func hideShop():
 	isOpen = false
@@ -94,7 +94,12 @@ func _ready():
 	print("Fish Database:")
 	for r in range(16):
 		var fishOfThisRarity = shopItems.filter(func(f): return f.rarity==r)
-		print("rarity-",r," [",fishOfThisRarity.size()," fish] ", fishOfThisRarity.reduce(func(acc,f): return acc + f.properName+", ",""))
+		var count = fishOfThisRarity.size()
+		var total = fishOfThisRarity.reduce(func(acc,f): return acc + f.cost,0)
+		var avg = 0
+		if count > 0: avg = round(float(total) / float(count))
+		var list = fishOfThisRarity.reduce(func(acc,f): return acc + f.properName+" ($"+str(f.cost)+")"+ ", ","")
+		print("R",r," | ",count,"x | $",avg," = ", list )
 	refreshShop()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

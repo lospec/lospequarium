@@ -32,7 +32,7 @@ contact_monitor = true
 linear_damp = 0.5
 script = ExtResource("1_lj3ua")
 properName = "Barred Knifejaw"
-cost = 400
+cost = 300
 maxSpeed = 20
 rarity = 4
 

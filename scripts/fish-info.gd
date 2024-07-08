@@ -8,7 +8,7 @@ extends NinePatchRect
 @export var selectedFish : Node2D
 
 func _process(delta):
-	if (selectedFish):
+	if selectedFish and is_instance_valid(selectedFish):
 		updateHunger()
 	if (main.DEBUG_MODE):
 		updateDebugText()
@@ -109,3 +109,36 @@ func updateDebugText():
 	fishInfo += "moneyDropCoolDown: " + str(fish.moneyDropCoolDown) + "\n"
 	
 	get_node("/root/Node2D/UI/FishInfo/DebugText").text = fishInfo
+
+func _on_rename_area_mouse_entered():
+	$RenameButton.visible = true
+
+func _on_rename_area_mouse_exited():
+	$RenameButton.visible = false
+
+func _on_rename_button_pressed():
+	$FishName.grab_focus()
+	$FishName.caret_column = $FishName.text.length()
+
+func _on_fish_name_text_submitted(new_text):
+	$FishName.release_focus()
+	selectedFish.petName = $FishName.text
+
+
+func _on_rename_area_input_event(viewport, event, shape_idx):
+	pass
+	var physicsSpace = get_world_2d().direct_space_state
+	var query_parameters = PhysicsPointQueryParameters2D.new()
+	query_parameters.collide_with_areas = true
+	query_parameters.position = event.position
+	var intersections = physicsSpace.intersect_point(query_parameters)
+	for i in intersections:
+		if i.collider == self or i.collider == $FishName or i.collider == $RenameButton: 
+			$RenameButton.visible = true
+			print("showy")
+
+
+func _on_fish_name_text_changed(new_text):
+	selectedFish.petName = $FishName.text
+
+	
