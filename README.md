@@ -74,3 +74,25 @@ A good minigame fits the following criteria:
 - earns coins progressively while playing
 - gets progressively harder, eventually leading to the game ending
 - gives out ~10-20 coins when played well
+
+### Branches
+
+Each version will get it's own branch, which will be merged into main upon release. 
+
+Branch should be named `vX` with X being the version number.
+
+After creating a new branch, the following should be updated:
+- Project > Project settings > Application > Config > Version
+- Names of export locations
+
+A new release on github should be made with the same version number as the title and tag.
+All notable changes should be listed in an unordered list.
+It should be saved as a draft until release, at which point the final .exe file should be attached and it should be published.
+It should be set as the latest release.
+
+When released:
+- open a PR from the version branch to main
+- squash and merge the PR with the version, ie `v6`
+- make the release live
+- upload the new version to itch.io
+- post the release on discord on Lospec and Godot
