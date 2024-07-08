@@ -2,6 +2,8 @@
 
 A simple aquarium simulator reusing the fish assets from the Pikzel Lake collab.
 
+Play Online: [https://lospecdotcom.itch.io/lospequarium](https://lospecdotcom.itch.io/lospequarium)
+
 ## Controls
 
 `Left Click` to feed the fish and collect the coins.
