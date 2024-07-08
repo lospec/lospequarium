@@ -32,7 +32,7 @@ func update_view():
 	if pretty_title: $Title.text = pretty_title
 	else: $Title.text = "!MISSING TITLE"
 	
-	if game_id and FileAccess.file_exists("res://minigames/"+game_id+"/icon.png"):
+	if game_id and ResourceLoader.exists("res://minigames/"+game_id+"/icon.png"):
 		$GameIcon.texture = load("res://minigames/"+game_id+"/icon.png")
 	else:
 		$GameIcon.texture = load("res://art/ui/arcade-button-missing-game.png")
