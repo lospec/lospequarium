@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dk4otinrljxs5"
-path="res://.godot/imported/anchovy.png-dd5a6a1477368f05dcb70d319607da11.ctex"
+path="res://.godot/imported/Anchovy.png-55b03b36d32ea5bd0fa288a1e8d80881.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/fish/anchovy.png"
-dest_files=["res://.godot/imported/anchovy.png-dd5a6a1477368f05dcb70d319607da11.ctex"]
+source_file="res://art/fish/Anchovy.png"
+dest_files=["res://.godot/imported/Anchovy.png-55b03b36d32ea5bd0fa288a1e8d80881.ctex"]
 
 [params]
 

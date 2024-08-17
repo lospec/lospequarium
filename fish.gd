@@ -16,6 +16,7 @@ var level:int = 1
 var xp:int = 0
 var birth:float = Time.get_unix_time_from_system()
 
+const hungerSpeed = 60
 
 var speed = maxSpeed
 
@@ -57,12 +58,13 @@ var lastFlip = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	
-	if (state == IDLE):	idle()
-	if (state == SWIM):	swim()
-	if (state == FOOD):	food()
+	{
+		IDLE: idle,
+		SWIM: swim,
+		FOOD: food
+	}[state].call()
 
-	hunger = hunger + 1
+	hunger = hunger + delta * hungerSpeed
 	if (hunger > hungerThreshold): hunger = hungerThreshold
 	
 	if (lastFlip + 500 < Time.get_ticks_msec() && abs(direction.x) > 0.25):
@@ -80,10 +82,8 @@ func idle():
 		state = SWIM
 		boredom = 0
 		updateOutline()
-	pass
 
 func swim():
-	
 	if (hunger>hungerThreshold/2 && FoodGroup.get_children().size() > 0): 
 		state = FOOD
 		return food()
@@ -160,7 +160,6 @@ func _on_fish_mouth_body_shape_entered(body_rid, collidedObject, body_shape_inde
 		if (self == FishInfoPanel.selectedFish):
 			FishInfoPanel.updateXP()
 
-
 func _on_mouse_entered():
 	(sprite.material as ShaderMaterial).set("shader_param/enabled", true)
 	(sprite.material as ShaderMaterial).set("shader_param/line_color", Vector4(1,1,1,1))
@@ -175,12 +174,18 @@ func _on_mouse_exited():
 	print('unhover fish')
 
 func _on_input_event(viewport, event, shape_idx):
-	if (event is InputEventMouseButton && !event.pressed && event.button_index==1):
-		FishInfoPanel.selectedFish = self
-		FishInfoPanel.revealInfo()
-		print("clicked fish")
-		
-
+	if !(event is InputEventMouseButton) || event.pressed || event.button_index != 1:
+		return
+	var physicsSpace = get_world_2d().direct_space_state
+	var query_parameters = PhysicsPointQueryParameters2D.new()
+	query_parameters.collide_with_areas = true
+	query_parameters.position = event.position
+	var intersections = physicsSpace.intersect_point(query_parameters)
+	for i in intersections:
+		if i.collider.name in ["CoinClick"]: return
+	FishInfoPanel.selectedFish = self
+	FishInfoPanel.revealInfo()
+	print("clicked fish")
 
 func _on_body_entered(collidedObject):
 	if (collidedObject.name == "Fish"):
@@ -195,22 +200,14 @@ func updateOutline():
 		(sprite.material as ShaderMaterial).set("shader_param/enabled", false)
 
 func levelUpOutline():
-	outlineOn()
-	await get_tree().create_timer(0.15).timeout
-	outlineOff()
-	await get_tree().create_timer(0.15).timeout
-	outlineOn()
-	await get_tree().create_timer(0.15).timeout
-	outlineOff()
-	await get_tree().create_timer(0.15).timeout	
-	outlineOn()
-	await get_tree().create_timer(0.15).timeout
-	outlineOff()
-	await get_tree().create_timer(0.15).timeout	
-	outlineOn()
-	await get_tree().create_timer(0.15).timeout
-	outlineOff()
-	await get_tree().create_timer(1.0).timeout
+	var timeout = 0.15
+	for i in range(8):
+		if i % 2 == 0:
+			outlineOn()
+		else:
+			outlineOff()
+		await get_tree().create_timer(timeout).timeout
+	await get_tree().create_timer(1.0 - timeout).timeout
 	updateOutline()
 	
 func outlineOn():

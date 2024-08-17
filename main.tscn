@@ -127,6 +127,7 @@ shape = SubResource("WorldBoundaryShape2D_gsbav")
 shape = SubResource("WorldBoundaryShape2D_65aca")
 
 [node name="TopWall" type="StaticBody2D" parent="Tank/Collisions"]
+position = Vector2(0, 40)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tank/Collisions/TopWall"]
 shape = SubResource("WorldBoundaryShape2D_8dguh")
