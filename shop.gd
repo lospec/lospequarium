@@ -162,8 +162,6 @@ func roomInTank():
 	print("tanksize: ",game.tankSize," | current fish: ",fishContainer.get_child_count(), " | room in tank: ",str(game.tankSize > fishContainer.get_child_count()))
 	return (game.tankSize > fishContainer.get_child_count()) 
 	
-
-
 func _on_buy_current_item_button_gui_input(event):
 	checkIfClickedShopButtonIsDisable(event, buyCurrentItemButton)
 
