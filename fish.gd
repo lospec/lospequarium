@@ -63,7 +63,7 @@ func _process(delta):
 		SWIM: swim,
 		FOOD: food
 	}[state].call()
-
+	
 	hunger = hunger + delta * hungerSpeed
 	if (hunger > hungerThreshold): hunger = hungerThreshold
 	
@@ -76,6 +76,9 @@ func _process(delta):
 			sprite.scale.x = 1
 			mouth.scale.x = 1
 
+func is_hungry():
+	return hunger > hungerThreshold / 2
+
 func idle(): 
 	boredom = boredom + rng.randi_range(0,5)
 	if (boredom > boredomThreshold):
@@ -84,13 +87,13 @@ func idle():
 		updateOutline()
 
 func swim():
-	if (hunger>hungerThreshold/2 && FoodGroup.get_children().size() > 0): 
+	if (is_hungry() && FoodGroup.get_children().size() > 0): 
 		state = FOOD
 		return food()
 	
 	if (tired == 0): 
 		direction = Vector2(rng.randi_range(-1,1), rng.randi_range(-1,1))
-		if (hunger > hungerThreshold/2): speed = maxSpeed / 5
+		if (is_hungry()): speed = maxSpeed / 5
 		else: speed = maxSpeed
 	
 	apply_impulse(Vector2(direction.x/100*speed,direction.y/500*speed), Vector2(0.5,0.5))
@@ -99,7 +102,7 @@ func swim():
 	if (tired > tiredThreshold):
 		state = IDLE
 		tired = 0
-		if (hunger > hungerThreshold/2): tired = tiredThreshold/2
+		if (is_hungry()): tired = tiredThreshold/2
 	
 	moneyDrop()
 
@@ -115,7 +118,7 @@ func moneyDrop():
 
 func food():
 	var current_foods = FoodGroup.get_children()
-	if current_foods.size() == 0: 
+	if current_foods.size() == 0 || !is_hungry():
 		state = SWIM
 		return swim()
 	var closest_distance = 9999

@@ -172,6 +172,3 @@ func checkIfClickedShopButtonIsDisable (event, button):
 	if (event is InputEventMouseButton && event.pressed && event.button_index==1):
 		if (button.disabled):
 			get_node("/root/Node2D/Sound/CantBuy").playing = true
-
-
-

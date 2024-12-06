@@ -101,11 +101,11 @@ Label/fonts/font = ExtResource("16_txocg")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4ss04"]
 size = Vector2(96, 57)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ihl1"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gf4ul"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_akpou"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ihl1"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_rauu0")
@@ -510,9 +510,9 @@ theme = ExtResource("8_pmiyt")
 theme_override_colors/font_color = Color(0.286275, 0.333333, 0.533333, 1)
 theme_override_fonts/font = ExtResource("15_fg7uf")
 theme_override_font_sizes/font_size = 8
-theme_override_styles/normal = SubResource("StyleBoxEmpty_1ihl1")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_gf4ul")
 theme_override_styles/read_only = SubResource("StyleBoxEmpty_akpou")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1ihl1")
 text = "FISH NAME"
 alignment = 1
 max_length = 10
